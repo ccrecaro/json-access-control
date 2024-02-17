@@ -1,0 +1,25 @@
+{
+  "name": "json-access-control",
+  "version": "1.0.0",
+  "description": "JSON based tool for access control",
+  "main": "dist/index.ts",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ccrecaro/json-access-control.git"
+  },
+  "author": "CarolinaContreras",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ccrecaro/json-access-control/issues"
+  },
+  "homepage": "https://github.com/ccrecaro/json-access-control#readme",
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^7.0.1"
+  }
+}

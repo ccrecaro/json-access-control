@@ -1,0 +1,583 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/product.schema.json",
+    "title": "Policy Schema",
+    "description": "A product in the catalog",
+    "properties": {
+      "Request": {
+          "type": "object",
+          "properties": {
+              "PolicySet": {
+                "$ref": "#/definition/PolicySetObject"
+              },
+              "Policy": {
+                "$ref": "#/definition/PolicyObject"
+              }
+          }
+      }
+    },
+    "definition": {
+        "PolicySetObject": {
+            "type": "object",
+            "properties": {
+                "Description": {
+                    "type": "string"
+                },
+                "PolicyIssuer": {
+                    "$ref": "#/definition/PolicyIssuerObject"
+                },
+                "PolicySetDefaults": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Target": {
+                    "type": "object",
+                    "properties": {
+                        "AnyOf": {
+                            "type": "array",
+                            "items": { "$ref": "#/definition/AnyOfObject" }
+                        }
+                    }
+                },
+                "PolicySet": {
+                    "type": "array",
+                    "items": { 
+                        "$ref": "#/definition/PolicySetObject" 
+                    }
+                },
+                "Policy": {
+                    "type": "array",
+                    "items": { 
+                        "$ref": "#/definition/PolicyObject" 
+                    }
+                },
+                "PolicySetIdReference": {
+                    "type": "array",
+                    "items": { 
+                        "$ref": "#/definition/IdReference" 
+                    }
+                },
+                "PolicyIdReference": {
+                    "type": "array",
+                    "items": { 
+                        "$ref": "#/definition/IdReference" 
+                    }
+                },
+                "CombinerParameters": {
+                    "type": "array",
+                    "items": { 
+                        "$ref": "#/definition/CombinerParametersObject" 
+                    }
+                },
+                "PolicyCombinerParameters": {
+                    "type": "array",
+                    "items": { 
+                        "$ref": "#/definition/PolicyCombinerParametersObject" 
+                    }
+                },
+                "PolicySetCombinerParameters": {
+                    "type": "array",
+                    "items": { 
+                        "$ref": "#/definition/PolicySetCombinerParametersObject" 
+                    }
+                },
+                "ObligationExpressions": {
+                    "type": "array",
+                    "items": { 
+                        "$ref": "#/definition/ObligationOrAdviceExpression" 
+                    }
+                },
+                "AdviceExpressions": {
+                    "type": "array",
+                    "items": { 
+                        "$ref": "#/definition/ObligationOrAdviceExpression" 
+                    }
+                },
+                "PolicySetId": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Version": {
+                    "type": "string",
+                    "pattern": "(\\d+\\.)*\\d+"
+                },
+                "PolicyCombiningAlgId": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "MaxDelegationDepth": {
+                    "type": "integer"
+                }
+            },
+            "required": [ "PolicySetId", "Version", "PolicyCombiningAlgId", "Target" ]
+        },
+        "PolicyObject": {
+            "type": "object",
+            "properties": {
+                "Description": {
+                    "type": "string"
+                },
+                "PolicyIssuer": {
+                    "$ref": "#/definition/PolicyIssuerObject"
+                },
+                "PolicyDefaults": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Target": {
+                    "type": "object",
+                    "properties": {
+                        "AnyOf": {
+                            "type": "array",
+                            "items": { "$ref": "#/definition/AnyOfObject" }
+                        }
+                    }
+                },
+                "CombinerParameters": {
+                    "type": "array",
+                    "items": { 
+                        "$ref": "#/definition/CombinerParametersObject" 
+                    }
+                },
+                "RuleCombinerParameters": {
+                    "type": "array",
+                    "items": { 
+                        "$ref": "#/definition/RuleCombinerParametersObject" 
+                    }
+                },
+                "VariableDefinition": {
+                    "type": "array",
+                    "item": {
+                        "$ref": "#/definition/VariableDefinitionObject" 
+                    }
+                },
+                "Rule": {
+                    "type": "array",
+                    "item": {
+                        "$ref": "#/definition/RuleObject" 
+                    }
+                },
+                "ObligationExpressions": {
+                    "type": "array",
+                    "items": { 
+                        "$ref": "#/definition/ObligationOrAdviceExpression" 
+                    }
+                },
+                "AdviceExpressions": {
+                    "type": "array",
+                    "items": { 
+                        "$ref": "#/definition/ObligationOrAdviceExpression" 
+                    }
+                },
+                "PolicyId": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Version": {
+                    "type": "string",
+                    "pattern": "(\\d+\\.)*\\d+"
+                },
+                "RuleCombiningAlgId": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "MaxDelegationDepth": {
+                    "type": "integer"
+                }
+            },
+            "required": [ "PolicyId", "Version", "RuleCombiningAlgId", "Target" ]
+        },
+        "RuleObject": {
+            "type": "object",
+            "properties": {
+                "Description": {
+                    "type": "string"
+                },
+                "Target": {
+                    "type": "object",
+                    "properties": {
+                        "AnyOf": {
+                            "type": "array",
+                            "items": { "$ref": "#/definition/AnyOfObject" }
+                        }
+                    }
+                },
+                "Condition": {
+                    "$ref": "#/definition/ExpressionObject" 
+                },
+                "ObligationExpressions": {
+                    "type": "array",
+                    "items": { 
+                        "$ref": "#/definition/ObligationOrAdviceExpression" 
+                    }
+                },
+                "AdviceExpressions": {
+                    "type": "array",
+                    "items": { 
+                        "$ref": "#/definition/ObligationOrAdviceExpression" 
+                    }
+                },
+                "RuleId": {
+                    "type": "string"
+                },
+                "Effect": {
+                    "type": "string",
+                    "enum": [ "Permit", "Deny" ]
+                }
+            },
+            "required": [ "RuleId", "Effect" ]
+        },
+        "PolicyIssuerObject": {
+            "type": "object",
+            "properties": {
+                "Content": {
+                    "type": "string"
+                },
+                "Attribute": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definition/AttributeObject"
+                    }
+                }
+            }
+        },
+        "AttributeObject": {
+            "type": "object",
+            "properties": {
+                "AttributeId": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Value": {
+                    "oneOf": [
+                        { "type": "string" },
+                        { "type": "boolean" },
+                        { "type": "number" },
+                        { "type": "object" },
+                        { "type": "array", "items": { "type": "string" } },
+                        { "type": "array", "items": { "type": "boolean" } },
+                        { "type": "array", "items": { "type": "number" } },
+                        { "type": "array", "items": { "type": "object" } }
+                    ]
+                },
+                "Issuer": {
+                    "type": "string"
+                },
+                "DataType": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "IncludeInResult": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "AnyOfObject": {
+            "type": "object",
+            "properties": {
+                "AllOf": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definition/AllOfObject"
+                    },
+                    "minContains": 1
+                }
+            }
+        },
+        "AllOfObject": {
+            "type": "object",
+            "properties": {
+                "Match": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definition/MatchObject"
+                    },
+                    "minContains": 1
+                }
+            }
+        },
+        "MatchObject": {
+            "type": "object",
+            "properties": {
+                "Value": {
+                    "oneOf": [
+                        { "type": "string" },
+                        { "type": "boolean" },
+                        { "type": "number" },
+                        { "type": "object" },
+                        { "type": "array", "items": { "type": "string" } },
+                        { "type": "array", "items": { "type": "boolean" } },
+                        { "type": "array", "items": { "type": "number" } },
+                        { "type": "array", "items": { "type": "object" } }
+                    ]
+                },
+                "DataType": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "XPathCategory": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "AttributeDesignator": {
+                    "$ref": "#/definition/AttributeDesignatorObject"
+                },
+                "AttributeSelector": {
+                    "$ref": "#/definition/AttributeSelectorObject"
+                },
+                "MatchId": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "oneOf" : [
+                { "required" : [ "MatchId", "AttributeDesignator" ] }, 
+                { "required" : [ "MatchId", "AttributeSelector" ] }
+            ]
+        },
+        "IdReference": {
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Version": {
+                    "type": "string",
+                    "pattern": "(\\d+\\.)*\\d+"
+                }
+            },
+            "required": ["Id"]
+        },
+        "CombinerParametersObject": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definition/CombinerParameterObject"
+            }
+        },
+        "CombinerParameterObject": {
+            "type": "object",
+            "properties": {
+                "Value": {
+                    "oneOf": [
+                        { "type": "string" },
+                        { "type": "boolean" },
+                        { "type": "number" },
+                        { "type": "object" },
+                        { "type": "array", "items": { "type": "string" } },
+                        { "type": "array", "items": { "type": "boolean" } },
+                        { "type": "array", "items": { "type": "number" } },
+                        { "type": "array", "items": { "type": "object" } }
+                    ]
+                },
+                "DataType": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "ParameterName": {
+                    "type": "string"
+                }
+            },
+            "required": [ "ParameterName", "DataType" ]
+        },
+        "PolicyCombinerParametersObject": {
+            "type": "object",
+            "properties": {
+                "CombinerParameters": {
+                    "$ref": "#/definition/CombinerParametersObject"
+                },
+                "PolicyIdRef": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "required": [ "PolicyIdRef" ]
+        },
+        "PolicySetCombinerParametersObject": {
+            "type": "object",
+            "properties": {
+                "CombinerParameters": {
+                    "$ref": "#/definition/CombinerParametersObject"
+                },
+                "PolicySetIdRef": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "required": [ "PolicySetIdRef" ]
+        },
+        "ObligationOrAdviceExpression": {
+            "type": "object",
+            "properties": {
+                "AttributeAssignmentExpression": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definition/AttributeAssignmentExpressionObject"
+                    }
+                },
+                "Id": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "FulfillOnOrAppliesTo": {
+                    "type": "string",
+                    "enum": [ "Permit", "Deny" ]
+                }
+            },
+            "required": [ "Id", "FulfillOnOrAppliesTo" ]
+        },
+        "AttributeAssignmentExpressionObject": {
+            "type": "object",
+            "properties": {
+                "Expression": {
+                    "$ref": "#/definition/ExpressionObject"
+                },
+                "AttributeId": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Category": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Issuer": {
+                    "type": "string"
+                }
+            },
+            "required": [ "Expression", "AttributeId" ]
+        },
+        "RuleCombinerParametersObject": {
+            "type": "object",
+            "properties": {
+                "CombinerParameters": {
+                    "$ref": "#/definition/CombinerParametersObject"
+                },
+                "RuleIdRef": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "required": [ "RuleIdRef" ]
+        },
+        "VariableDefinitionObject": {
+            "type": "object",
+            "properties": {
+                "Expression": {
+                    "$ref": "#/definition/ExpressionObject"
+                },
+                "VariableId": {
+                    "type": "string"
+                }
+            },
+            "required": [ "Expression", "VariableId" ]
+        },
+        "ExpressionObject": {
+            "type": "object",
+            "properties": {
+                "Apply": { "$ref": "#/definition/ApplyObject" },
+                "AttributeSelector": { "$ref": "#/definition/AttributeSelectorObject" },
+                "Attribute": { "$ref": "#/definition/AttributeObject" },
+                "Function": { "$ref": "#/definition/FunctionObject" },
+                "VariableReference": { "$ref": "#/definition/VariableReferenceObject" },
+                "AttributeDesignator": { "$ref": "#/definition/AttributeDesignatorObject" }
+            },
+            "oneOf": [
+                { "required": [ "Apply" ] },
+                { "required": [ "AttributeSelector" ] },
+                { "required": [ "Attribute" ] },
+                { "required": [ "Function" ] },
+                { "required": [ "VariableReference" ] },
+                { "required": [ "AttributeDesignator" ] }
+            ]
+        },
+        "ApplyObject": {
+            "type": "object",
+            "properties": {
+                "Description": {
+                    "type": "string"
+                },
+                "Expression": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definition/ExpressionObject"
+                    }
+                },
+                "FunctionId": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "required": [ "FunctionId" ]
+
+        },
+        "AttributeSelectorObject": {
+            "type": "object",
+            "properties": {
+                "Category": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "ContextSelectorId": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Path": {
+                    "type": "string"
+                },
+                "DataType": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "MustBePresent": {
+                    "type": "boolean"
+                }
+            },
+            "required": [ "Category", "Path", "DataType", "MustBePresent" ]
+        },
+        "FunctionObject": {
+            "type": "object",
+            "properties": {
+                "FunctionId": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "required": [ "FunctionId" ]
+        },
+        "VariableReferenceObject": {
+            "type": "object",
+            "properties": {
+                "VariableId": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "required": [ "VariableId" ]
+        },
+        "AttributeDesignatorObject": {
+            "type": "object",
+            "properties": {
+                "Category": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "AttributeId": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "DataType": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Issuer": {
+                    "type": "string"
+                },
+                "MustBePresent": {
+                    "type": "boolean"
+                }
+            },
+            "required": [ "Category", "AttributeId", "DataType", "MustBePresent" ]
+        }
+    }
+}
+  
