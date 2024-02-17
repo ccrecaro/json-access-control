@@ -163,7 +163,7 @@ class PolicySet {
         return this._policySetCombinerParameters;
     }
 
-    public set policySetCombinerParameters(policySetCombinerParameters: PolicyCombinerParameters[]) {
+    public set policySetCombinerParameters(policySetCombinerParameters: PolicySetCombinerParameters[]) {
         this._policySetCombinerParameters = policySetCombinerParameters;
     }
 
