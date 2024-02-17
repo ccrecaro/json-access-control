@@ -1,0 +1,233 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/product.schema.json",
+    "title": "Response Schema",
+    "description": "A product in the catalog",
+    "properties": {
+        "Response": {
+            "type": "array",
+            "items": {
+                    "$ref": "#/definition/Result"
+            },
+            "minContains": 1      
+        }
+    },
+    "definition": {
+        "Result": {
+            "type": "object",
+            "properties": {
+                "Decision": {
+                    "type": "string"
+                },
+                "Status": {
+                    "type": "object",
+                    "properties": {
+                        "StatusMessage": {
+                            "type": "string"
+                        },
+                        "StatusDetail": {
+                            "oneOf": [
+                                { "type": "string" },
+                                { "type": "array", "items": { "$ref": "#/definition/MissingAttributeDetail" } }
+                            ]
+                        },
+                        "StatusCode": {
+                            "$ref": "#/definition/StatusCodeObject"
+                        }
+                    }
+                },
+                "Obligations": {
+                    "type": "array",
+                    "items": { "$ref": "#/definition/ObligationOrAdvice" }
+                },
+                "AssociatedAdvice": {
+                    "type": "array",
+                    "items": { "$ref": "#/definition/ObligationOrAdvice" }
+                },
+                "Category": {
+                    "oneOf": [
+                        { "$ref": "#/definition/CategoryObject" },
+                        { "type": "array", "items": { "$ref": "#/definition/CategoryObject" } }
+                    ]
+                },
+                "PolicyIdentifierList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definition/PolicyIdentifier"
+                    }
+                }
+            },
+            "required": [ "Decision" ]
+        },
+        "CategoryObject": {
+            "type": "object",
+            "properties": {
+                "CategoryId": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Id": {
+                    "type": "string"
+                },
+                "Content": {
+                    "type": "string"
+                },
+                "Attribute": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definition/AttributeObject"
+                    }
+                }
+            },
+            "required": [ "CategoryId" ]
+        },
+        "PolicyIdentifier": {
+            "type": "object",
+            "properties": {
+                "PolicyIdReference": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definition/IdReference"
+                    }
+                },
+                "PolicySetIdReference": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definition/IdReference"
+                    }
+                }
+            }
+        },
+        "StatusCodeObject": {
+            "type": "object",
+            "properties": {
+                "Value": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "SubStatusCode": {
+                    "type": "array",
+                    "items": { "$ref": "#/definition/StatusCodeObject" }
+                }
+            }
+        },
+        "MissingAttributeDetail": {
+            "type": "object",
+            "properties": {
+                "AttributeId": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Value": {
+                    "oneOf": [
+                        { "type": "string" },
+                        { "type": "boolean" },
+                        { "type": "number" },
+                        { "type": "object" },
+                        { "type": "array", "items": { "type": "string" } },
+                        { "type": "array", "items": { "type": "boolean" } },
+                        { "type": "array", "items": { "type": "number" } },
+                        { "type": "array", "items": { "type": "object" } }
+                    ]
+                },
+                "Issuer": {
+                    "type": "string"
+                },
+                "DataType": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Category": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "required": [ "AttributeId", "Category" ]
+        },
+        "ObligationOrAdvice": {
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "AttributeAssignment": {
+                    "type": "array",
+                    "items": { "$ref": "#/definition/AttributeAssignmentObject" }
+                }
+            },
+            "required": [ "Id" ]
+        },
+        "AttributeAssignmentObject": {
+            "type": "object",
+            "properties": {
+                "AttributeId": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Value": {
+                    "type": "string"
+                },
+                "Category": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "DataType": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Issuer": {
+                    "type": "string"
+                }
+            },
+            "required": [ "AttributeId", "Value" ]
+        },
+        "IdReference": {
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Version": {
+                    "type": "string",
+                    "pattern": "(\\d+\\.)*\\d+"
+                }
+            },
+            "required": ["Id"]
+        },
+        "AttributeObject": {
+            "type": "object",
+            "properties": {
+                "AttributeId": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Value": {
+                    "oneOf": [
+                        { "type": "string" },
+                        { "type": "boolean" },
+                        { "type": "number" },
+                        { "type": "object" },
+                        { "type": "array", "items": { "type": "string" } },
+                        { "type": "array", "items": { "type": "boolean" } },
+                        { "type": "array", "items": { "type": "number" } },
+                        { "type": "array", "items": { "type": "object" } }
+                    ]
+                },
+                "Issuer": {
+                    "type": "string"
+                },
+                "DataType": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "IncludeInResult": {
+                    "type": "boolean"
+                }
+            },
+            "required": [ "AttributeId", "Value" ]
+        }
+    }
+}
+  

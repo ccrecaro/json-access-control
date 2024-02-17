@@ -1,0 +1,87 @@
+{
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://example.com/product.schema.json",
+      "title": "Request Schema",
+      "description": "A product in the catalog",
+      "properties": {
+        "Request": {
+            "type": "object",
+            "properties": {
+                "ReturnPolicyIdList": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "CombinedDecision": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "XPathVersion": {
+                    "type": "string"
+                },
+                "Category": {
+                    "type": "array",
+                    "items": {
+                            "$ref": "#/definition/CategoryObject"
+                    }
+                }
+            }
+        }
+      },
+    "definition": {
+        "CategoryObject": {
+            "type": "object",
+            "properties": {
+                "CategoryId": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Id": {
+                    "type": "string"
+                },
+                "Content": {
+                    "type": "string"
+                },
+                "Attribute": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definition/AttributeObject"
+                    }
+                }
+            },
+            "required": ["CategoryId"]
+        },
+        "AttributeObject": {
+            "type": "object",
+            "properties": {
+                "AttributeId": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Value": {
+                    "oneOf": [
+                        { "type": "string" },
+                        { "type": "boolean" },
+                        { "type": "number" },
+                        { "type": "object" },
+                        { "type": "array", "items": { "type": "string" } },
+                        { "type": "array", "items": { "type": "boolean" } },
+                        { "type": "array", "items": { "type": "number" } },
+                        { "type": "array", "items": { "type": "object" } }
+                    ]
+                },
+                "Issuer": {
+                    "type": "string"
+                },
+                "DataType": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "IncludeInResult": {
+                    "type": "boolean"
+                }
+            },
+            "required": [ "AttributeId", "Value" ]
+        }
+    }
+}
+    
