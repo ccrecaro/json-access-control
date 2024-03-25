@@ -1,16 +1,33 @@
-class Rule {
+import { Target } from "./objects/targetElements/Target";
+import { ObligationOrAdviceExpression } from "./objects/ObligationOrAdviceExpression";
+import { ObligationOrAdvice } from "./objects/ObligationOrAdvice";
+import { Result } from "./objects/Result";
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+import { RequestCtx } from "./objects/architecture/context/RequestCtx";
+import { EvaluationResult } from "./objects/result/EvaluationResult";
+import { Expression } from "./objects/expression/Expression";
+
+@JsonObject()
+export class Rule {
+    @JsonProperty({name: 'RuleId', required: true})
     private _ruleId: string;
+    @JsonProperty({name: 'Effect', required: true})
     private _effect: effectType;
+    @JsonProperty({name: 'Description', required: false})
     private _description?: string;
-    private _target?: AnyOf[];
+    @JsonProperty({name: 'Target', required: false})
+    private _target?: Target;
+    @JsonProperty({name: 'Condition', required: false})
     private _condition?: Expression;
+    @JsonProperty({name: 'ObligationExpressions', required: false})
     private _obligationExpressions?: ObligationOrAdviceExpression[];
+    @JsonProperty({name: 'AdviceExpressions', required: false})
     private _adviceExpressions?: ObligationOrAdviceExpression[];
 
     constructor(ruleId: string,
         effect: effectType,
         description?: string,
-        target?: AnyOf[],
+        target?: Target,
         condition?: Expression,
         obligationExpressions?: ObligationOrAdviceExpression[],
         adviceExpressions?: ObligationOrAdviceExpression[]) {
@@ -51,7 +68,7 @@ class Rule {
         return this._target;
     }
 
-    public set target(target: AnyOf[]) {
+    public set target(target: Target) {
         this._target = target
     }
 
@@ -79,4 +96,67 @@ class Rule {
         this._adviceExpressions = adviceExpressions;
     }
 
+
+    public evaluate(request: RequestCtx): Result {
+        var match: MatchResult;
+
+        if (this._target) {
+            match = this._target.match(request);
+
+            if (match == MatchResult.NO_MATCH){
+                return new Result(DecisionResult.NOT_APPLICABLE);
+            }
+
+            if (match == MatchResult.INDETERMINATE) {
+                if(this._effect == "Permit") {
+                    return new Result(DecisionResult.INDETERMINATE_P);
+                } else {
+                    return new Result(DecisionResult.INDETERMINATE_D);
+                }
+            }
+        }
+
+        if(this._condition == null) {
+            return new Result(this._effect, undefined, this.processObligationsAndAdvices(request, this._obligationExpressions), this.processObligationsAndAdvices(request, this._adviceExpressions))
+        }
+
+        var result: EvaluationResult|null = this._condition.evaluate(request);
+
+        if(result) {
+            if(result._isIndeterminate) {
+                if(this._effect == "Permit"){
+                    return new Result(DecisionResult.INDETERMINATE_P);
+                } else {
+                    return new Result(DecisionResult.INDETERMINATE_D);
+                }
+            } else {
+    
+                if(typeof result.value == "boolean") {
+                    if(result.value) {
+                        return new Result(this._effect, undefined, this.processObligationsAndAdvices(request, this._obligationExpressions), this.processObligationsAndAdvices(request, this._adviceExpressions));
+                    } else {
+                        return new Result(DecisionResult.NOT_APPLICABLE);
+                    }
+                } 
+                return new Result(DecisionResult.NOT_APPLICABLE);
+            }
+        } else {
+            return new Result(DecisionResult.NOT_APPLICABLE);
+        }
+
+    }
+
+    private processObligationsAndAdvices(request: RequestCtx, obligationOrAdviceExpression?: ObligationOrAdviceExpression[]): ObligationOrAdvice[] | undefined {
+
+        if(obligationOrAdviceExpression != null && obligationOrAdviceExpression.length > 0){
+            var results: ObligationOrAdvice[] = [];
+            for(let expression of obligationOrAdviceExpression){
+                if(expression.fulfillOnOrAppliesTo == this._effect) {
+                    results.push(expression.evaluate(request));
+                }
+            }
+            return results;
+        }
+        return undefined;
+    }
 }

@@ -1,8 +1,28 @@
+import { DENY_OVERRIDES, DENY_UNLESS_PERMIT, FIRST_APPLICABLE, ONLY_ONE_APPLICABLE, ORDERED_DENY_OVERRIDES, ORDERED_PERMIT_OVERRIDES, PERMIT_OVERRIDES, PERMIT_UNLESS_DENY } from "../constants/PolicyAlgorithms";
+import { denyOverridesCombiningAlgorithm } from "../services/combiningAlgorithms/DenyOverrides";
+import { denyUnlessPermitCombiningAlgorithm } from "../services/combiningAlgorithms/DenyUnlessPermit";
+import { firstApplicableEffectRuleCombiningAlgorithm } from "../services/combiningAlgorithms/FirstApplicable";
+import { onlyOneApplicablePolicyPolicyCombiningAlogrithm } from "../services/combiningAlgorithms/OnlyOneApplicable";
+import { OrderedDenyOverridesCombiningAlgorithm } from "../services/combiningAlgorithms/OrderedDenyOverrides";
+import { OrderedPermitOverridesCombiningAlgorithm } from "../services/combiningAlgorithms/OrderedPermitOverrides";
+import { permitOverridesCombiningAlgorithm } from "../services/combiningAlgorithms/PermitOverrides";
+import { permitUnlessDenyCombiningAlgorithm } from "../services/combiningAlgorithms/PermitUnlessDeny";
+import { Policy } from "./Policy";
+import { IdReference } from "./objects/IdReference";
+import { ObligationOrAdviceExpression } from "./objects/ObligationOrAdviceExpression";
+import { PolicyIssuer } from "./objects/PolicyIssuer";
+import { RequestCtx } from "./objects/architecture/context/RequestCtx";
+import { CombinerParameters } from "./objects/combiner/CombinerParameters";
+import { PolicyCombinerParameters } from "./objects/combiner/PolicyCombinerParameters";
+import { PolicySetCombinerParameters } from "./objects/combiner/PolicySetCombinerParameters";
+import { EvaluationResult } from "./objects/result/EvaluationResult";
+import { Target } from "./objects/targetElements/Target";
+
 class PolicySet {
     private _policySetId: string;
     private _version: string;
     private _policyCombiningAlgId: string;
-    private _target: AnyOf[];
+    private _target: Target;
     private _description?: string;
     private _policyIssuer?: PolicyIssuer;
     private _policySetDefaults?: string;
@@ -20,7 +40,7 @@ class PolicySet {
     constructor(policySetId: string,
         version: string,
         policyCombiningAlgId: string,
-        target: AnyOf[],
+        target: Target,
         description?: string,
         policyIssuer?: PolicyIssuer,
         policySetDefaults?: string,
@@ -82,7 +102,7 @@ class PolicySet {
         return this._target;
     }
 
-    public set target(target: AnyOf[]) {
+    public set target(target: Target) {
         this._target = target
     }
 
@@ -189,5 +209,40 @@ class PolicySet {
 
     public set maxDelegationDepth(maxDepth: number) {
         this._maxDelegationDepth = maxDepth;
+    }
+
+
+    public evaluateTarget(request: RequestCtx): EvaluationResult {
+    }
+
+    public createPolicySetFromJSON(json: JSON): PolicySet {
+        
+    }
+
+    private getCombiningAlgorithm(request: RequestCtx) {
+        if(this._policy){
+            switch (this._policyCombiningAlgId) {
+                case DENY_OVERRIDES:
+                    return denyOverridesCombiningAlgorithm(request, this._policy);
+                case DENY_UNLESS_PERMIT:
+                    return denyUnlessPermitCombiningAlgorithm(request, this._policy);
+                case FIRST_APPLICABLE:
+                    return firstApplicableEffectRuleCombiningAlgorithm(request, this._policy);
+                case ONLY_ONE_APPLICABLE:
+                    return onlyOneApplicablePolicyPolicyCombiningAlogrithm(request, this._policy);
+                case ONLY_ONE_APPLICABLE:
+                    return onlyOneApplicablePolicyPolicyCombiningAlogrithm(request, this._policy);
+                /*case ORDERED_DENY_OVERRIDES:
+                    return OrderedDenyOverridesCombiningAlgorithm(request, this._policy);
+                case ORDERED_PERMIT_OVERRIDES:
+                    return OrderedPermitOverridesCombiningAlgorithm(request, this._policy);*/
+                case PERMIT_OVERRIDES:
+                    return permitOverridesCombiningAlgorithm(request, this._policy);
+                case PERMIT_UNLESS_DENY:
+                    return permitUnlessDenyCombiningAlgorithm(request, this._policy);
+                default:
+                    break;
+            }
+        }
     }
 }

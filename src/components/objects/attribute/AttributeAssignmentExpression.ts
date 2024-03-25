@@ -1,7 +1,17 @@
-class AttributeAssignmentExpression {
+import { RequestCtx } from "../architecture/context/RequestCtx";
+import { Expression } from "../expression/Expression";
+import { AttributeAssignment } from "./AttributeAssignment";
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+
+@JsonObject()
+export class AttributeAssignmentExpression {
+    @JsonProperty({name: 'Expression', required: true})
     private _expression: Expression;
+    @JsonProperty({name: 'AttributeId', required: true})
     private _attributeId: string;
+    @JsonProperty({name: 'Category', required: false})
     private _category?: string;
+    @JsonProperty({name: 'Issuer', required: false})
     private _issuer?: string;
 
     constructor(expression: Expression,
@@ -46,4 +56,32 @@ class AttributeAssignmentExpression {
     public set issuer(issuer: string) {
         this._issuer = issuer;
     }
+
+    public evaluate(request: RequestCtx): Set<AttributeAssignment>|null {
+        var values = new Set<AttributeAssignment>();
+        var result: EvaluationResult|null = this.expression.evaluate(request);
+        if(result == null || result.isIndeterminate){
+            return null;
+        }
+        var attributeValue: valueType = result.value;
+
+        if(attributeValue) {
+            if(Array.isArray(attributeValue)) {
+                if(attributeValue.length > 0) {
+                    for(let value of attributeValue) {
+                        let assignment: AttributeAssignment = new AttributeAssignment(this.attributeId, value, this._category, typeof value, this._issuer);
+                        values.add(assignment);
+                    }
+                } else {
+                    return null;
+                }
+            } else {
+                let assignment: AttributeAssignment = new AttributeAssignment(this.attributeId, attributeValue, this._category, typeof attributeValue, this._issuer);
+                        values.add(assignment);
+            }
+        }
+        return null;
+    }
+
+  
 }

@@ -1,0 +1,2 @@
+declare abstract class CombinerCreator {
+}

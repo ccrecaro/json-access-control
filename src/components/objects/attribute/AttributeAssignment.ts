@@ -1,12 +1,24 @@
-class AttributeAssignment {
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+
+@JsonObject()
+export class AttributeAssignment {
+    @JsonProperty({name: 'AttributeId', required: true})
     private _attributeId: string;
-    private _value: string;
+    
+    @JsonProperty({name: 'Value', required: true})
+    private _value: valueType;
+    
+    @JsonProperty({name: 'Category', required: false})
     private _category?: string;
+    
+    @JsonProperty({name: 'DataType', required: false})
     private _dataType?: string;
+    
+    @JsonProperty({name: 'Issuer', required: false})
     private _issuer?: string;
 
     constructor(attributeId: string,
-        value: string,
+        value: valueType,
         category?: string,
         dataType?: string,
         issuer?: string) {
@@ -29,7 +41,7 @@ class AttributeAssignment {
         return this._value;
     }
 
-    public set value(value: string) {
+    public set value(value: valueType) {
         this._value = value;
     }
 

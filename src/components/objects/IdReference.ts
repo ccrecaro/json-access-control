@@ -1,5 +1,10 @@
-class IdReference {
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+
+@JsonObject()
+export class IdReference {
+    @JsonProperty({name: 'Id', required: true})
     private _id: string;
+    @JsonProperty({name: 'Version', required: false})
     private _version?: string;
 
     constructor(id: string, version: string) {

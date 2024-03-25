@@ -1,6 +1,12 @@
-class CombinerParameter {
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+
+@JsonObject()
+export class CombinerParameter {
+    @JsonProperty({name: 'ParameterName', required: true})
     private _parameterName: string;
+    @JsonProperty({name: 'DataType', required: true})
     private _dataType: string;
+    @JsonProperty({name: 'Value', required: false})
     private _value?: valueType;
 
     constructor(parameterName: string,

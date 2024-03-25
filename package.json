@@ -4,8 +4,13 @@
   "description": "JSON based tool for access control",
   "main": "dist/index.ts",
   "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx tsc",
+    "start": "node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,8 +23,11 @@
   },
   "homepage": "https://github.com/ccrecaro/json-access-control#readme",
   "devDependencies": {
-    "@types/node": "^20.11.17",
+    "@types/node": "^20.11.21",
     "typescript": "^5.3.3",
     "typescript-eslint": "^7.0.1"
+  },
+  "dependencies": {
+    "typescript-json-serializer": "^6.0.1"
   }
 }

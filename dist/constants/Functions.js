@@ -1,0 +1,41 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.N_OF = exports.AND = exports.OR = exports.INTEGER_TO_DOUBLE = exports.DOUBLE_TO_INTEGER = exports.STRING_NORMALIZE_TO_LOWER_CASE = exports.STRING_NORMALIZE_SPACE = exports.FLOOR = exports.ROUND = exports.DOUBLE_ABS = exports.INTEGER_ABS = exports.INTEGER_MOD = exports.DOUBLE_DIVIDE = exports.INTEGER_DIVIDE = exports.DUOBLE_MULTIPLY = exports.INTEGER_MULTIPLY = exports.DOUBLE_SUBTRACT = exports.INTEGER_SUBTRACT = exports.DOUBLE_ADD = exports.INTEGER_ADD = exports.BASE64_BINARY_EQUAL = exports.HEX_BINARY_EQUAL = exports.RFC822NAME_EQUAL = exports.X500NAME_EQUAL = exports.ANY_URI_EQUAL = exports.STRING_EQUAL_IGNORE_CASE_EQUAL = exports.YEAR_MONTH_DURATION_EQUAL = exports.DAYTIME_DURATION_EQUAL = exports.DATETIME_EQUAL = exports.TIME_EQUAL = exports.DATE_EQUAL = exports.DOUBLE_EQUAL = exports.INTEGER_EQUAL = exports.BOOLEAN_EQUAL = exports.STRING_EQUAL = void 0;
+exports.STRING_EQUAL = "urn:oasis:names:tc:xacml:1.0:function:string-equal";
+exports.BOOLEAN_EQUAL = "urn:oasis:names:tc:xacml:1.0:function:boolean-equal";
+exports.INTEGER_EQUAL = "urn:oasis:names:tc:xacml:1.0:function:integer-equal";
+exports.DOUBLE_EQUAL = "urn:oasis:names:tc:xacml:1.0:function:double-equal";
+exports.DATE_EQUAL = "urn:oasis:names:tc:xacml:1.0:function:date-equal";
+exports.TIME_EQUAL = "urn:oasis:names:tc:xacml:1.0:function:time-equal";
+exports.DATETIME_EQUAL = "urn:oasis:names:tc:xacml:1.0:function:dateTime-equal";
+exports.DAYTIME_DURATION_EQUAL = "urn:oasis:names:tc:xacml:1.0:function:dayTimeDuration-equal";
+exports.YEAR_MONTH_DURATION_EQUAL = "urn:oasis:names:tc:xacml:1.0:function:yearMonthDuration-equal";
+exports.STRING_EQUAL_IGNORE_CASE_EQUAL = "urn:oasis:names:tc:xacml:1.0:function:string-equal-ignore-case";
+exports.ANY_URI_EQUAL = "urn:oasis:names:tc:xacml:1.0:function:anyURI-equal";
+exports.X500NAME_EQUAL = "urn:oasis:names:tc:xacml:1.0:function:x500Name-equal";
+exports.RFC822NAME_EQUAL = "urn:oasis:names:tc:xacml:1.0:function:rfc822Name-equal";
+exports.HEX_BINARY_EQUAL = "urn:oasis:names:tc:xacml:1.0:function:hexBinary-equal";
+exports.BASE64_BINARY_EQUAL = "urn:oasis:names:tc:xacml:1.0:function:base64Binary-equal";
+exports.INTEGER_ADD = "urn:oasis:names:tc:xacml:1.0:function:integer-add";
+exports.DOUBLE_ADD = "urn:oasis:names:tc:xacml:1.0:function:double-add";
+exports.INTEGER_SUBTRACT = "urn:oasis:names:tc:xacml:1.0:function:integer-subtract";
+exports.DOUBLE_SUBTRACT = "urn:oasis:names:tc:xacml:1.0:function:double-subtract";
+exports.INTEGER_MULTIPLY = "urn:oasis:names:tc:xacml:1.0:function:integer-multiply";
+exports.DUOBLE_MULTIPLY = "urn:oasis:names:tc:xacml:1.0:function:double-multiply";
+exports.INTEGER_DIVIDE = "urn:oasis:names:tc:xacml:1.0:function:integer-divide";
+exports.DOUBLE_DIVIDE = "urn:oasis:names:tc:xacml:1.0:function:double-divide";
+exports.INTEGER_MOD = "urn:oasis:names:tc:xacml:1.0:function:integer-mod";
+exports.INTEGER_ABS = "urn:oasis:names:tc:xacml:1.0:function:integer-abs";
+exports.DOUBLE_ABS = "urn:oasis:names:tc:xacml:1.0:function:double-abs";
+exports.ROUND = "urn:oasis:names:tc:xacml:1.0:function:round";
+exports.FLOOR = "urn:oasis:names:tc:xacml:1.0:function:floor";
+exports.STRING_NORMALIZE_SPACE = "urn:oasis:names:tc:xacml:1.0:function:string-normalize-space";
+exports.STRING_NORMALIZE_TO_LOWER_CASE = "urn:oasis:names:tc:xacml:1.0:function:string-normalize-to-lower-case";
+exports.DOUBLE_TO_INTEGER = "urn:oasis:names:tc:xacml:1.0:function:double-to-integer";
+exports.INTEGER_TO_DOUBLE = "urn:oasis:names:tc:xacml:1.0:function:integer-to-double";
+exports.OR = "urn:oasis:names:tc:xacml:1.0:function:or";
+exports.AND = "urn:oasis:names:tc:xacml:1.0:function:and";
+exports.N_OF = "urn:oasis:names:tc:xacml:1.0:function:n-of";
+//TODO
+//... seguir
+//# sourceMappingURL=Functions.js.map

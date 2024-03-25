@@ -1,15 +1,30 @@
-class Attribute implements Expression{
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+import { RequestCtx } from '../architecture/context/RequestCtx';
+import { Expression } from './Expression';
+import { EvaluationResult } from '../result/EvaluationResult';
+
+@JsonObject()
+export class Attribute implements Expression {
+    @JsonProperty({name: 'AttributeId', required: true})
     private _attributeId: string;
+
+    @JsonProperty({name: 'Value', required: true})
     private _value: valueType;
+
+    @JsonProperty({name: 'DataType', required: true})
+    private _dataType: string = "string";
+
+    @JsonProperty({name: 'Issuer', required: false})
     private _issuer?: string;
-    private _dataType?: string;
+    
+    @JsonProperty({name: 'IncludeInResult', required: false})
     private _includeInResult?: boolean;
 
     constructor(
         attributeId: string,
         value: valueType,
+        dataType: string = "string",
         issuer?: string,
-        dataType?: string,
         includeInResult?: boolean
     ) {
         this._attributeId = attributeId;
@@ -59,7 +74,13 @@ class Attribute implements Expression{
         this._includeInResult = include;
     }
 
-    public execute(): void {
-        
+    public evaluate(request: RequestCtx): EvaluationResult|null {
+        return new EvaluationResult(false, this._value, this._dataType, null, null);
     }
+
+    public isSearchedAttribute(type: string, id: string, issuer: string): boolean {
+        return this._dataType == type &&
+            this._attributeId == id &&
+            this._issuer == issuer;
+    }   
 }

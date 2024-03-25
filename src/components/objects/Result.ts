@@ -1,9 +1,27 @@
-class Result {
+import { Category } from "./Category";
+import { ObligationOrAdvice } from "./ObligationOrAdvice";
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+import { Status } from "./Status";
+import { PolicyIdentifier } from "./PolicyIdentifier";
+
+@JsonObject()
+export class Result {
+    @JsonProperty({name: 'Decision', required: true})
     private _decision: string;
+    
+    @JsonProperty({name: 'Status', required: false})
     private _status?: Status;
+    
+    @JsonProperty({name: 'Obligations', required: false})
     private _obligations?: ObligationOrAdvice[];
+    
+    @JsonProperty({name: 'AssociatedAdvice', required: false})
     private _associatedAdvice?: ObligationOrAdvice[];
+    
+    @JsonProperty({name: 'Category', required: false})
     private _category?: Category | Category[];
+    
+    @JsonProperty({name: 'PolicyIdentifierList', required: false})
     private _policyIdentifierList?: PolicyIdentifier[];
 
     constructor(decision: string,

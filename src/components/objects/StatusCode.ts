@@ -1,5 +1,12 @@
-class StatusCode {
+import { Status } from "./Status";
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+
+@JsonObject()
+export class StatusCode {
+    @JsonProperty({name: 'Value', required: false})
     private _value?: string;
+    
+    @JsonProperty({name: 'SubStatusCode', required: false})
     private _subStatusCode?: Status[];
 
     constructor(value?: string, subStatusCode?: Status[]) {

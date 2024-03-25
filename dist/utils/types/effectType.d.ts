@@ -1,0 +1,1 @@
+type effectType = "Permit" | "Deny";

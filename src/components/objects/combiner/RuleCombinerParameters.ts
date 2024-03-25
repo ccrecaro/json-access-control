@@ -1,4 +1,10 @@
-class RuleCombinerParameters extends CombinerParameters {
+import { CombinerParameter } from "./CombineParameter";
+import { CombinerParameters } from "./CombinerParameters";
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+
+@JsonObject()
+export class RuleCombinerParameters extends CombinerParameters {
+    @JsonProperty({name: 'RuleIdRef', required: true})
     private _ruleIdRef: string;
 
     constructor(ruleIdRef: string,

@@ -1,6 +1,16 @@
-class Apply implements Expression {
+import { RequestCtx } from "../architecture/context/RequestCtx";
+import { EvaluationResult } from "../result/EvaluationResult";
+import { Expression } from "./Expression";
+import { FunctionEx } from "./FunctionEx";
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+
+@JsonObject()
+export class Apply implements Expression {
+    @JsonProperty({name: 'FunctionId', required: true})
     private _functionId: string;
+    @JsonProperty({name: 'Description', required: false})
     private _description?: string;
+    @JsonProperty({name: 'Expression', required: false})
     private _expression?: Expression[];
 
     constructor(functionId: string,
@@ -36,7 +46,8 @@ class Apply implements Expression {
         this._expression = expressions;
     }
 
-    public execute(): void {
-        
+    public evaluate(request: RequestCtx): EvaluationResult|null {
+        var fnc: FunctionEx = new FunctionEx(this._functionId);
+        return fnc.evaluateFunction(this._expression, request);
     }
 }

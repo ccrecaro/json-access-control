@@ -1,0 +1,1 @@
+{"version":3,"file":"Function.js","sourceRoot":"","sources":["../../../../src/components/objects/expression/Function.ts"],"names":[],"mappings":";AAAA,MAAM,SAAS;IAGX,YAAY,UAAkB;QAC1B,IAAI,CAAC,WAAW,GAAG,UAAU,CAAC;IAClC,CAAC;IAED,IAAW,UAAU;QACjB,OAAO,IAAI,CAAC,WAAW,CAAC;IAC5B,CAAC;IAED,IAAW,UAAU,CAAC,EAAU;QAC5B,IAAI,CAAC,WAAW,GAAG,EAAE,CAAC;IAC1B,CAAC;IAEM,OAAO;IAEd,CAAC;CACJ"}
