@@ -11,7 +11,7 @@
                     "type": "boolean",
                     "default": false
                 },
-                "CombinedDecision": {
+                "XPathVersion": {
                     "type": "boolean",
                     "default": false
                 },

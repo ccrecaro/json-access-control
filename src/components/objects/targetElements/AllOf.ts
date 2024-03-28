@@ -1,10 +1,11 @@
+import { MatchResult } from '../../../enums/MatchResult';
 import { RequestCtx } from '../architecture/context/RequestCtx';
 import { Match } from '../match/Match'
 import { JsonObject, JsonProperty } from 'typescript-json-serializer';
 
 @JsonObject()
 export class AllOf {
-    @JsonProperty({name: 'Match', required: true})
+    @JsonProperty({name: 'Match', type: Match, required: true})
     private _matches: Match[];
 
     constructor(matches: Match[]) {
@@ -25,6 +26,8 @@ export class AllOf {
 
         for (let match of this._matches) {
             let result: MatchResult = match.match(request);
+            console.log(`AllOf match: ${result}`);
+
             // at least one no match
             if (result == MatchResult.NO_MATCH){
                 return result;

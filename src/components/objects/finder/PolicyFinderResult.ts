@@ -1,3 +1,4 @@
+import { MatchResult } from "../../../enums/MatchResult";
 import { Policy } from "../../Policy";
 import { Status } from "../Status";
 

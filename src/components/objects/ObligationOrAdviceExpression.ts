@@ -10,7 +10,7 @@ export class ObligationOrAdviceExpression {
     private _id: string;
     @JsonProperty({name: 'FulfillOnOrAppliesTo', required: true})
     private _fulfillOnOrAppliesTo: effectType;
-    @JsonProperty({name: 'AttributeAssignmentExpression', required: false})
+    @JsonProperty({name: 'AttributeAssignmentExpression', type: AttributeAssignmentExpression, required: false})
     private _attributeAssignmentExpression?: AttributeAssignmentExpression[];
 
     constructor(id: string,

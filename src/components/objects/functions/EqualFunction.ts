@@ -1,10 +1,10 @@
 import { STRING_EQUAL_IGNORE_CASE_EQUAL } from "../../../constants/Functions";
 import { RequestCtx } from "../architecture/context/RequestCtx";
 import { Expression } from "../expression/Expression";
-import { FunctionEx } from "../expression/FunctionEx";
 import { EvaluationResult } from "../result/EvaluationResult";
+import { BaseFunction } from "./BaseFunction";
 
-export class EqualFunction extends FunctionEx {
+export class EqualFunction extends BaseFunction {
 
     constructor(functionId: string) {
         super(functionId);
@@ -12,7 +12,9 @@ export class EqualFunction extends FunctionEx {
 
     public evaluateFunction(inputs: Expression[], request: RequestCtx): EvaluationResult|null {
         var argValues: valueType[] = new Array(inputs.length);
-        var result: EvaluationResult|null = this.evalArgs(inputs, request, argValues);
+        var result: EvaluationResult | null = this.evalArgs(inputs, request, argValues);
+        console.log("Equal function evaluate: ");
+        console.log(argValues);
         var evalResult: boolean = false;
         
         if (result != null)

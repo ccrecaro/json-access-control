@@ -5,7 +5,7 @@ import { Attribute } from './expression/Attribute';
 export class PolicyIssuer {
     @JsonProperty({name: 'Content', required: false})
     private _content?: string;
-    @JsonProperty({name: 'Attribute', required: false})
+    @JsonProperty({name: 'Attribute', type: Attribute, required: false})
     private _attribute?: Attribute[];
 
     constructor(content?: string, attribute?: Attribute[]) {

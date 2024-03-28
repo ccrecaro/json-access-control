@@ -79,8 +79,11 @@ export class Attribute implements Expression {
     }
 
     public isSearchedAttribute(type: string, id: string, issuer: string): boolean {
-        return this._dataType == type &&
-            this._attributeId == id &&
-            this._issuer == issuer;
+        console.log(`isSearchedAttribute: ${type}, ${id}, ${issuer}`);
+        console.log(`attribute: ${this._dataType}, ${this._attributeId}, ${this._issuer}`)
+
+        return this._dataType === type &&
+            this._attributeId === id &&
+            (this._issuer === issuer || (this._issuer === undefined && issuer === ""));
     }   
 }

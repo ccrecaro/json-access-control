@@ -14,7 +14,7 @@ export class RequestCtx implements Ctx {
     @JsonProperty({name: 'XPathVersion', required: false})
     private _xPathVersion?: string;
 
-    @JsonProperty({name: 'Category', required: false})
+    @JsonProperty({name: 'Category', type: Category, required: false})
     private _category?: Category[];
 
     // si el xPath no existe pasar un undefined
@@ -68,8 +68,8 @@ export class RequestCtx implements Ctx {
         if(this._category){
             for(let categoryElement of this._category){
                 let attributesFound: Attribute[] = categoryElement.findAttribute(type, id, issuer, category);
-                
                 for (let attribute of attributesFound) {
+                    console.log("inyecto valores")
                     values.push(attribute.value);
                 }
             }

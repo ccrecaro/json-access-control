@@ -1,16 +1,14 @@
-import { EnvironmentAttributes } from "./services/EnvironmentAttributes";
-
-const env = new EnvironmentAttributes();
-const resultTime = env.setEnvironmentDate("urn:oasis:names:tc:xacml:1.0:environment:current-time");
-const resultDate = env.setEnvironmentDate("urn:oasis:names:tc:xacml:1.0:environment:current-date");
-const resultDateTime = env.setEnvironmentDate("urn:oasis:names:tc:xacml:1.0:environment:current-dateTime");
-
-
-console.log("HOLA");
+import { Policy } from "./components/Policy";
+import { RequestCtx } from "./components/objects/architecture/context/RequestCtx";
+import { dataPolicy } from "./resources/policies/ts/testPolicy";
+import { JsonSerializer } from 'typescript-json-serializer';
+import { dataRequest } from "./resources/policies/ts/testRequest";
 
 
-//const data = defaultSerializer.serialize(policyTest);
+const defaultSerializer = new JsonSerializer();
 
+const policyTest:Policy = defaultSerializer.deserialize(dataPolicy, Policy) as Policy;
+const requestTest:RequestCtx = defaultSerializer.deserialize(dataRequest, RequestCtx) as RequestCtx;
 
-
-
+var res = policyTest.evaluate(requestTest);
+console.log(res);

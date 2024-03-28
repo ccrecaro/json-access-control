@@ -1,11 +1,12 @@
 import { RequestCtx } from "../architecture/context/RequestCtx";
 import { Expression } from "../expression/Expression";
+import { EvaluationResult } from "../result/EvaluationResult";
 import { AttributeAssignment } from "./AttributeAssignment";
 import { JsonObject, JsonProperty } from 'typescript-json-serializer';
 
 @JsonObject()
 export class AttributeAssignmentExpression {
-    @JsonProperty({name: 'Expression', required: true})
+    @JsonProperty({name: 'Expression', type: Expression, required: true})
     private _expression: Expression;
     @JsonProperty({name: 'AttributeId', required: true})
     private _attributeId: string;

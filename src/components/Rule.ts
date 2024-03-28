@@ -6,6 +6,8 @@ import { JsonObject, JsonProperty } from 'typescript-json-serializer';
 import { RequestCtx } from "./objects/architecture/context/RequestCtx";
 import { EvaluationResult } from "./objects/result/EvaluationResult";
 import { Expression } from "./objects/expression/Expression";
+import { MatchResult } from "../enums/MatchResult";
+import { DecisionResult } from "../enums/DecisionResults";
 
 @JsonObject()
 export class Rule {
@@ -15,13 +17,13 @@ export class Rule {
     private _effect: effectType;
     @JsonProperty({name: 'Description', required: false})
     private _description?: string;
-    @JsonProperty({name: 'Target', required: false})
+    @JsonProperty({name: 'Target', type: Target, required: false})
     private _target?: Target;
-    @JsonProperty({name: 'Condition', required: false})
+    @JsonProperty({name: 'Condition', type: Expression, required: false})
     private _condition?: Expression;
-    @JsonProperty({name: 'ObligationExpressions', required: false})
+    @JsonProperty({name: 'ObligationExpressions', type: ObligationOrAdviceExpression, required: false})
     private _obligationExpressions?: ObligationOrAdviceExpression[];
-    @JsonProperty({name: 'AdviceExpressions', required: false})
+    @JsonProperty({name: 'AdviceExpressions', type: ObligationOrAdviceExpression, required: false})
     private _adviceExpressions?: ObligationOrAdviceExpression[];
 
     constructor(ruleId: string,
@@ -99,9 +101,11 @@ export class Rule {
 
     public evaluate(request: RequestCtx): Result {
         var match: MatchResult;
+        console.log("RULE EVAL");
 
         if (this._target) {
             match = this._target.match(request);
+            console.log(`match: ${match}`);
 
             if (match == MatchResult.NO_MATCH){
                 return new Result(DecisionResult.NOT_APPLICABLE);

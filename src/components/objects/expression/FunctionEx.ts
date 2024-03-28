@@ -1,5 +1,6 @@
-import { DATE_EQUAL, STRING_EQUAL } from "../../../constants/Functions";
+import { DATE_EQUAL, STRING_EQUAL, STRING_EQUAL_IGNORE_CASE_EQUAL } from "../../../constants/Functions";
 import { RequestCtx } from "../architecture/context/RequestCtx";
+import { BaseFunction } from "../functions/BaseFunction";
 import { EqualFunction } from "../functions/EqualFunction";
 import { EvaluationResult } from "../result/EvaluationResult";
 import { Expression } from "./Expression";
@@ -25,9 +26,10 @@ export class FunctionEx implements Expression {
     }
 
     public evaluateFunction(inputs:Expression[]|undefined, request: RequestCtx): EvaluationResult|null {
-        var fnc: FunctionEx;
+        var fnc: BaseFunction;
         switch (this._functionId) {
             case STRING_EQUAL:
+            case STRING_EQUAL_IGNORE_CASE_EQUAL:
             case DATE_EQUAL:
                 fnc = new EqualFunction(this._functionId);
                 return fnc.evaluateFunction(inputs, request);

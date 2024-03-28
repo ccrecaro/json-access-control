@@ -1,3 +1,4 @@
+import { MatchResult } from "../../../enums/MatchResult";
 import { Status } from "../Status";
 
 export class EvaluationResult {

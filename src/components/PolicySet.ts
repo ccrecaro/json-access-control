@@ -3,8 +3,8 @@ import { denyOverridesCombiningAlgorithm } from "../services/combiningAlgorithms
 import { denyUnlessPermitCombiningAlgorithm } from "../services/combiningAlgorithms/DenyUnlessPermit";
 import { firstApplicableEffectRuleCombiningAlgorithm } from "../services/combiningAlgorithms/FirstApplicable";
 import { onlyOneApplicablePolicyPolicyCombiningAlogrithm } from "../services/combiningAlgorithms/OnlyOneApplicable";
-import { OrderedDenyOverridesCombiningAlgorithm } from "../services/combiningAlgorithms/OrderedDenyOverrides";
-import { OrderedPermitOverridesCombiningAlgorithm } from "../services/combiningAlgorithms/OrderedPermitOverrides";
+/* import { OrderedDenyOverridesCombiningAlgorithm } from "../services/combiningAlgorithms/OrderedDenyOverrides";
+import { OrderedPermitOverridesCombiningAlgorithm } from "../services/combiningAlgorithms/OrderedPermitOverrides"; */
 import { permitOverridesCombiningAlgorithm } from "../services/combiningAlgorithms/PermitOverrides";
 import { permitUnlessDenyCombiningAlgorithm } from "../services/combiningAlgorithms/PermitUnlessDeny";
 import { Policy } from "./Policy";
@@ -212,12 +212,12 @@ class PolicySet {
     }
 
 
-    public evaluateTarget(request: RequestCtx): EvaluationResult {
+/*     public evaluateTarget(request: RequestCtx): EvaluationResult {
     }
 
     public createPolicySetFromJSON(json: JSON): PolicySet {
         
-    }
+    } */
 
     private getCombiningAlgorithm(request: RequestCtx) {
         if(this._policy){

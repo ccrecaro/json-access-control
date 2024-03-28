@@ -6,6 +6,7 @@ import { RequestCtx } from '../architecture/context/RequestCtx';
 import { StatusCode } from '../StatusCode';
 import { Status } from '../Status';
 import { PolicyFinderResult } from './PolicyFinderResult';
+import { MatchResult } from '../../../enums/MatchResult';
 
 class PolicyFinder {
     private _policies: Map<string, Policy>;
@@ -37,7 +38,7 @@ class PolicyFinder {
     }
 
     public loadPolicy(jsonPolicy: JSON) {
-        var policySet: PolicySet;
+        //var policySet: PolicySet;
         var policy: Policy;
         const defaultSerializer = new JsonSerializer();
 
@@ -86,7 +87,8 @@ class PolicyFinder {
             case 1:
                 return new PolicyFinderResult(selectedPolicies[0]);
             default:
-                return new PolicyFinderResult(new PolicySet(null, combiningAlg, null, selectedPolicies)); //arreglar esto
+                return new PolicyFinderResult();
+                //return new PolicyFinderResult(new PolicySet(null, combiningAlg, null, selectedPolicies)); //arreglar esto
         }
     }
 }

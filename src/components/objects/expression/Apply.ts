@@ -10,7 +10,7 @@ export class Apply implements Expression {
     private _functionId: string;
     @JsonProperty({name: 'Description', required: false})
     private _description?: string;
-    @JsonProperty({name: 'Expression', required: false})
+    @JsonProperty({name: 'Expression', type: Expression, required: false})
     private _expression?: Expression[];
 
     constructor(functionId: string,

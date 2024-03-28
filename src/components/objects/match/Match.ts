@@ -1,16 +1,18 @@
 import { AttributeSelector } from "../expression/AttributeSelector";
 import { AttributeDesignator } from "../expression/AttributeDesignator";
-import { functionEvaluator } from "../../../services/functions/functionEvaluator";
 import { JsonObject, JsonProperty } from 'typescript-json-serializer';
 import { RequestCtx } from "../architecture/context/RequestCtx";
 import { Status } from "../Status";
 import { EvaluationResult } from "../result/EvaluationResult";
+import { FunctionEx } from "../expression/FunctionEx";
+import { Expression } from "../expression/Expression";
+import { MatchResult } from "../../../enums/MatchResult";
 
 @JsonObject()
 export abstract class Match {
     @JsonProperty({name: 'MatchId', required: true})
     private _matchId: string; //esto entrega la funcion a aplicar
-    @JsonProperty({name: 'AttributeDesignator', required: true})
+    @JsonProperty({name: 'AttributeDesignator', type: AttributeDesignator, required: true})
     private _evaluator: AttributeDesignator /*| AttributeSelector*/;
     @JsonProperty({name: 'Value', required: false})
     private _value?: valueType;
@@ -74,14 +76,16 @@ export abstract class Match {
     public match(request: RequestCtx): MatchResult {
         var atLeastOneError: boolean = false;
         var result: EvaluationResult|null = this._evaluator.evaluate(request);
+        console.log(`Match evaluate: `);
+        console.log(result);
+        console.log("-------");
 
         if(result){
             if (result.isIndeterminate) {
-
                 return MatchResult.INDETERMINATE;
             }
     
-            var resultValue: valueType = result.value; //recordar que pueden ser arrays
+            var resultValue: valueType = this._value? this._value : []; //recordar que pueden ser arrays
             var bag = Array.isArray(resultValue) ? resultValue: [resultValue]; 
     
             if(bag.length!=0) {
@@ -89,10 +93,11 @@ export abstract class Match {
                 let firstIndeterminateStatus: Status|null = null;
     
                 for (let element of bag) {
-                    let inputs = [this.value, element];
-    
+                    let inputs: Expression[] = [this._evaluator, element];
+                    console.log(`@ inputs: `);
+                    console.log(inputs);
                     let match: MatchResult = this.evaluateMatch(inputs, request);
-    
+                    console.log(`@ match: ${match}`);
                     // we only need one match for this whole thing to match
                     if (match == MatchResult.MATCH) {
                         return match;
@@ -118,17 +123,18 @@ export abstract class Match {
         return MatchResult.ERROR;
     }
 
-    public evaluateMatch(inputs: valueType, request: RequestCtx): MatchResult {
+    public evaluateMatch(inputs: Expression[], request: RequestCtx): MatchResult {
         // first off, evaluate the function
-        var result: EvaluationResult = functionEvaluator(this.matchId, inputs, request);
+        var fnc: FunctionEx = new FunctionEx(this._matchId);
+        var result: EvaluationResult|null = fnc.evaluateFunction(inputs, request);
         var bool: boolean = false;
 
         // if it was indeterminate, then that's what we return immediately
-        if (result.isIndeterminate)
+        if (result && result.isIndeterminate)
             return MatchResult.INDETERMINATE;
 
         // otherwise, we figure out if it was a match
-        if(typeof result.value == "boolean") {
+        if(result && typeof result.value == "boolean") {
             bool = result.value;
         }
 

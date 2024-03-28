@@ -7,10 +7,10 @@ export class Status {
     @JsonProperty({name: 'StatusMessage', required: false})
     private _message?: string;
     
-    @JsonProperty({name: 'StatusDetail', required: false})
+    @JsonProperty({name: 'StatusDetail', type: MissingAttributeDetail, required: false})
     private _detail?: string | MissingAttributeDetail[];
     
-    @JsonProperty({name: 'StatusCode', required: false})
+    @JsonProperty({name: 'StatusCode', type: StatusCode, required: false})
     private _code?: StatusCode;
 
     constructor(statusMessage?: string,

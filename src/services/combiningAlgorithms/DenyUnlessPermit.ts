@@ -1,6 +1,7 @@
 import { Policy } from "../../components/Policy";
 import { Rule } from "../../components/Rule";
 import { RequestCtx } from "../../components/objects/architecture/context/RequestCtx";
+import { DecisionResult } from "../../enums/DecisionResults";
 import { decisionFinder } from "./DecisionFinder";
 
 export function denyUnlessPermitCombiningAlgorithm(request: RequestCtx, elements: Rule[] | Policy[]): DecisionResult {

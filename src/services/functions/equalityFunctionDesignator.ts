@@ -1,4 +1,4 @@
-import { argumentsgEqual, stringEqualIgnoreCase } from "./EqualityFunctions";
+import { argumentsEqual, stringEqualIgnoreCase } from "./EqualityFunctions";
 
 export function equalityFunctionDesignator(functionId: string, arg1:any, arg2: any) {
     switch(functionId) {
@@ -6,6 +6,6 @@ export function equalityFunctionDesignator(functionId: string, arg1:any, arg2: a
             return stringEqualIgnoreCase(arg1, arg2);
         
         default:
-            return argumentsgEqual(arg1, arg2);
+            return argumentsEqual(arg1, arg2);
     }
 }

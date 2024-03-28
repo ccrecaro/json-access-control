@@ -1,9 +1,11 @@
 import { Policy } from "../../components/Policy";
 import { RequestCtx } from "../../components/objects/architecture/context/RequestCtx";
+import { DecisionResult } from "../../enums/DecisionResults";
+import { MatchResult } from "../../enums/MatchResult";
 
 export function onlyOneApplicablePolicyPolicyCombiningAlogrithm(request: RequestCtx, policies: Policy[]): DecisionResult {
     var atLeastOne: boolean = false;
-    var selectedPolicy: Policy;
+    var selectedPolicy: Policy|null = null;
     var appResult: MatchResult; 
 
     for (let i = 0; i < policies.length ; i++ ) {
@@ -26,10 +28,10 @@ export function onlyOneApplicablePolicyPolicyCombiningAlogrithm(request: Request
     }
 
     if ( atLeastOne ) {
-        let decisionResult: string = selectedPolicy.evaluate(request).result[0].decision;
-        return Object.keys(DecisionResult).filter(x => DecisionResult[x] == decisionResult);
-
-    } else {
-        return DecisionResult.NOT_APPLICABLE;
+        if(selectedPolicy) {
+            let decisionResult: DecisionResult = selectedPolicy.evaluate(request).getDecisionResultFromString() as DecisionResult;
+            return decisionResult;
+        }
     }
+    return DecisionResult.NOT_APPLICABLE;
 }

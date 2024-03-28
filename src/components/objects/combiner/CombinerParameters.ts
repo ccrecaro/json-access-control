@@ -3,7 +3,7 @@ import { CombinerParameter } from './CombineParameter';
 
 @JsonObject()
 export class CombinerParameters {
-    @JsonProperty({name: 'CombinerParameters', required: false})
+    @JsonProperty({name: 'CombinerParameters', type: CombinerParameter, required: false})
     private _combinerParameter: CombinerParameter[];
 
     constructor(combinerParameter: CombinerParameter[]) {

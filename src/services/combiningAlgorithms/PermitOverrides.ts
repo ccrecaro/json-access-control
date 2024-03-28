@@ -1,3 +1,8 @@
+import { Policy } from "../../components/Policy";
+import { Rule } from "../../components/Rule";
+import { RequestCtx } from "../../components/objects/architecture/context/RequestCtx";
+import { DecisionResult } from "../../enums/DecisionResults";
+
 export function permitOverridesCombiningAlgorithm(request: RequestCtx, elements: Rule[] | Policy[]): DecisionResult {
     var atLeastOneErrorD: boolean  = false;
     var atLeastOneErrorP: boolean  = false;
@@ -5,7 +10,7 @@ export function permitOverridesCombiningAlgorithm(request: RequestCtx, elements:
     var atLeastOneDeny: boolean = false;
 
     for(let i=0 ; i < elements.length ; i++) {
-        let decision: DecisionResult = elements[i].evaluate(request);
+        let decision: DecisionResult = elements[i].evaluate(request).getDecisionResultFromString() as DecisionResult;
         if (decision == DecisionResult.DENY) {
             atLeastOneDeny = true;
             continue;

@@ -1,0 +1,114 @@
+{
+    "Policy": [
+        {
+            "PolicyId": "urn:oasis:names:tc:xacml:3.0:example:policyid:1",
+            "RuleCombiningAlgId": "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides",
+            "Version": "1.0",
+            "PolicyDefaults": "http://www.w3.org/TR/1999/REC-xpath-19991116",
+            "Target": {},
+            "VariableDefinition": [
+                {
+                    "VariableId": "17590034",
+                    "Expression": [
+                        {
+                            "Apply": {
+                                "FunctionId": "urn:oasis:names:tc:xacml:1.0:function:string-equal",
+                                "Expression": [
+                                    {
+                                        "Apply": {
+                                            "FunctionId": "urn:oasis:names:tc:xacml:1.0:function:string-one-and-only",
+                                            "AttributeDesignator": {
+                                                "MustBePresent": false,
+                                                "Category": "urn:oasis:names:tc:xacml:1.0:subject-category:access-subject",
+                                                "AttributeId": "urn:oasis:names:tc:xacml:3.0:example:attribute:patient-number",
+                                                "DataType": "http://www.w3.org/2001/XMLSchema#string"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Apply": {
+                                            "FunctionId": "urn:oasis:names:tc:xacml:1.0:function:string-one-and-only",
+                                            "AttributeSelector": {
+                                                "MustBePresent": false,
+                                                "Category": "urn:oasis:names:tc:xacml:3.0:attribute-category:resource",
+                                                "Path": "md:record/md:patient/md:patient-number/text()",
+                                                "DataType": "http://www.w3.org/2001/XMLSchema#string"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                        
+                    ]
+                }
+            ],
+            "Rule": [
+                {
+                    "RuleId": "urn:oasis:names:tc:xacml:3.0:example:ruleid:1",
+                    "Effect": "Permit",
+                    "Description": "A person may read any medical record in the http://www.med.example.com/schemas/record.xsd namespace for which he or she is the designated patient",
+                    "Target": {
+                        "AnyOf": [
+                            {
+                                "AllOf": [
+                                    {
+                                        "Match": [
+                                            {
+                                                "MatchId": "urn:oasis:names:tc:xacml:1.0:function:anyURI-equal",
+                                                "DataType": "http://www.w3.org/2001/XMLSchema#anyURI",
+                                                "Value": "urn:example:med:schemas:record",
+                                                "AttributeDesignator": {
+                                                    "MustBePresent": false,
+                                                    "Category": "urn:oasis:names:tc:xacml:3.0:attribute-category:resource",
+                                                    "AttributeId": "urn:oasis:names:tc:xacml:2.0:resource:target-namespace",
+                                                    "DataType": "http://www.w3.org/2001/XMLSchema#anyURI"
+                                                }
+                                            },
+                                            {
+                                                "MatchId": "urn:oasis:names:tc:xacml:3.0:function:xpath-node-match",
+                                                "DataType": "urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression",
+                                                "XPathCategory": "urn:oasis:names:tc:xacml:3.0:attribute-category:resource",
+                                                "Value": "md:record",
+                                                "AttributeDesignator": {
+                                                    "MustBePresent": false,
+                                                    "Category": "urn:oasis:names:tc:xacml:3.0:attribute-category:resource",
+                                                    "AttributeId": "urn:oasis:names:tc:xacml:3.0:content-selector",
+                                                    "DataType": "urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "AllOf": [
+                                    {
+                                        "Match": [
+                                            {
+                                                "MatchId": "urn:oasis:names:tc:xacml:1.0:function:string-equal",
+                                                "DataType":"http://www.w3.org/2001/XMLSchema#string",
+                                                "Value": "read",
+                                                "AttributeDesignator": {
+                                                    "MustBePresent": false,
+                                                    "Category": "urn:oasis:names:tc:xacml:3.0:attribute-category:action",
+                                                    "AttributeId": "urn:oasis:names:tc:xacml:1.0:action:action-id",
+                                                    "DataType": "http://www.w3.org/2001/XMLSchema#string"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "Condition": {
+                        "VariableReference": {
+                            "VariableId":"17590034"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

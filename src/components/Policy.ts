@@ -1,5 +1,8 @@
 import { PERMIT_OVERRIDES } from "../constants/PolicyAlgorithms";
 import { DENY_OVERRIDES, DENY_UNLESS_PERMIT, FIRST_APPLICABLE, ORDERED_PERMIT_OVERRIDES, PERMIT_UNLESS_DENY } from "../constants/RuleAlgorithms";
+import { DecisionResult } from "../enums/DecisionResults";
+import { MatchResult } from "../enums/MatchResult";
+import { decisionFinder } from "../services/combiningAlgorithms/DecisionFinder";
 import { denyOverridesCombiningAlgorithm } from "../services/combiningAlgorithms/DenyOverrides";
 import { denyUnlessPermitCombiningAlgorithm } from "../services/combiningAlgorithms/DenyUnlessPermit";
 import { firstApplicableEffectRuleCombiningAlgorithm } from "../services/combiningAlgorithms/FirstApplicable";
@@ -24,37 +27,50 @@ import { JsonObject, JsonProperty } from 'typescript-json-serializer';
 export class Policy {
     @JsonProperty({name: 'PolicyId', required: true})
     private _policyId: string;
+
     @JsonProperty({name: 'Version', required: true})
     private _version: string;
+
     @JsonProperty({name: 'RuleCombiningAlgId', required: true})
     private _ruleCombiningAlgId: string;
-    @JsonProperty({name: 'Target', required: true})
-    private _target: Target;
-    @JsonProperty({name: 'Version', required: false})
+
+    @JsonProperty({name: 'Target', type: Target, required: false})
+    private _target?: Target;
+
+    @JsonProperty({name: 'Description', required: false})
     private _description?: string;
-    @JsonProperty({name: 'PolicyIssuer', required: false})
+
+    @JsonProperty({name: 'PolicyIssuer', type: PolicyIssuer, required: false})
     private _policyIssuer?: PolicyIssuer;
+
     @JsonProperty({name: 'PolicyDefaults', required: false})
     private _policyDefaults?: string;
-    @JsonProperty({name: 'CombinerParameters', required: false})
+
+    @JsonProperty({name: 'CombinerParameters', type: CombinerParameters, required: false})
     private _combinerParameters?: CombinerParameters[];
-    @JsonProperty({name: 'RuleCombinerParameters', required: false})
+
+    @JsonProperty({name: 'RuleCombinerParameters', type: RuleCombinerParameters, required: false})
     private _ruleCombinerParameters?: RuleCombinerParameters[];
-    @JsonProperty({name: 'VariableDefinition', required: false})
+
+    @JsonProperty({name: 'VariableDefinition', type: VariableDefinition, required: false})
     private _variableDefinition?: VariableDefinition[];
-    @JsonProperty({name: 'Rule', required: false})
+
+    @JsonProperty({name: 'Rule', type: Rule, required: false})
     private _rule?: Rule[];
-    @JsonProperty({name: 'ObligationExpressions', required: false})
+
+    @JsonProperty({name: 'ObligationExpressions', type: ObligationOrAdviceExpression, required: false})
     private _obligationExpressions?: ObligationOrAdviceExpression[];
-    @JsonProperty({name: 'AdviceExpressions', required: false})
+
+    @JsonProperty({name: 'AdviceExpressions', type: ObligationOrAdviceExpression, required: false})
     private _adviceExpressions?: ObligationOrAdviceExpression[];
+
     @JsonProperty({name: 'MaxDelegationDepth', required: false})
     private _maxDelegationDepth?: number;
 
     constructor(policyId: string,
         version: string,
         ruleCombiningAlgId: string,
-        target: Target,
+        target?: Target,
         description?: string,
         policyIssuer?: PolicyIssuer,
         policyDefaults?: string,
@@ -106,7 +122,7 @@ export class Policy {
         this._ruleCombiningAlgId = id;
     }
 
-    public get target() {
+    public getTarget() {
         return this._target;
     }
 
@@ -194,29 +210,50 @@ export class Policy {
         this._maxDelegationDepth = maxDepth;
     }
     
-    public evaluate(request: RequestCtx): ResponseCtx {
+    public generateResponse(request: RequestCtx): ResponseCtx {
+        var result: Result = this.evaluate(request);
+        var decisionResult: DecisionResult = result.getDecisionResultFromString() as DecisionResult;
+        var idReference: IdReference = new IdReference(this._policyId, this._version);
+        var policyIdentifier: PolicyIdentifier = new PolicyIdentifier([idReference]);
+
+        if(this._obligationExpressions && this._obligationExpressions.length<1 
+            && this._adviceExpressions && this._adviceExpressions.length<1) {
+            return new ResponseCtx([result]);
+        }
+        if(this.isIndeterminate(decisionResult) || decisionResult == DecisionResult.NOT_APPLICABLE) {
+            return new ResponseCtx([result])
+        }
+
+        var response: ResponseCtx = new ResponseCtx([result])
+        return this.processObligationAndAdvices(request, decisionResult, response);
+
+    }
+
+    public evaluate(request: RequestCtx): Result {
         var decisionResult: DecisionResult =  this.getCombiningAlgorithm(request);
+        console.log(`decisionResult: ${decisionResult}`);
         
         if(this._obligationExpressions && this._obligationExpressions.length<1 
             && this._adviceExpressions && this._adviceExpressions.length<1) {
-            return new ResponseCtx([new Result(decisionResult)]);
+                
+            return new Result(decisionResult);
         }
 
         if(this.isIndeterminate(decisionResult) || decisionResult == DecisionResult.NOT_APPLICABLE) {
-            return new ResponseCtx([new Result(decisionResult)]);
+            return new Result(decisionResult);
         }
 
         var idReference: IdReference = new IdReference(this._policyId, this._version);
         var policyIdentifier: PolicyIdentifier = new PolicyIdentifier([idReference]);
         var initialResult: Result = new Result(decisionResult, undefined, undefined, undefined, undefined, [policyIdentifier]);
-        var response: ResponseCtx = new ResponseCtx([initialResult])
-        return this.processObligationAndAdvices(request, decisionResult, response);
+        return initialResult;
     }
 
     private getCombiningAlgorithm(request: RequestCtx): DecisionResult {
         if(this._rule){
             switch (this._ruleCombiningAlgId) {
                 case DENY_OVERRIDES:
+                    console.log(DENY_OVERRIDES);
                     return denyOverridesCombiningAlgorithm(request, this._rule);
                 case DENY_UNLESS_PERMIT:
                     return denyUnlessPermitCombiningAlgorithm(request, this._rule);

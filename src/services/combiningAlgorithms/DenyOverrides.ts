@@ -1,6 +1,7 @@
 import { Policy } from "../../components/Policy";
 import { Rule } from "../../components/Rule";
 import { RequestCtx } from "../../components/objects/architecture/context/RequestCtx";
+import { DecisionResult } from "../../enums/DecisionResults";
 import { decisionFinder } from "./DecisionFinder";
 
 // Usando any por simplicidad pero luego cambiarlo por lo correcto
@@ -12,6 +13,7 @@ export function denyOverridesCombiningAlgorithm(request: RequestCtx, elements: R
 
     for(let i=0 ; i < elements.length ; i++) {
         let decision : string = decisionFinder(request, elements[i]);
+        console.log(`decision: ${decision}`);
         
         if (decision == DecisionResult.DENY) {
             return DecisionResult.DENY;

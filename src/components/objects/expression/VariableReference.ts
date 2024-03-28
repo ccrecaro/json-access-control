@@ -8,7 +8,7 @@ import { EvaluationResult } from '../result/EvaluationResult';
 export class VariableReference implements Expression {
     @JsonProperty({name: 'VariableId', required: true})
     private _variableId: string;
-    @JsonProperty({name: 'Definition', required: false})
+    @JsonProperty({name: 'Definition', type: VariableDefinition, required: false})
     private _definition: VariableDefinition|null = null;
 
     constructor(variableId: string, definition: VariableDefinition|null = null) {

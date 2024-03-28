@@ -1,10 +1,11 @@
+import { MatchResult } from "../../../enums/MatchResult";
 import { RequestCtx } from "../architecture/context/RequestCtx";
 import { AnyOf } from "./AnyOf";
 import { JsonObject, JsonProperty } from 'typescript-json-serializer';
 
 @JsonObject()
 export class Target {
-    @JsonProperty({name: 'AnyOf', required: true})
+    @JsonProperty({name: 'AnyOf', type: AnyOf, required: true})
     private _anyOf: AnyOf[];
     
     constructor(anyOf: AnyOf[]) {
@@ -25,6 +26,7 @@ export class Target {
         //let location of this._policiesLocation
         for (let anyOfElem of this._anyOf) {
             let result: MatchResult = anyOfElem.match(request);
+            console.log(`Target match: ${result}`);
             if (result == MatchResult.NO_MATCH){
                 return result;
             } else if(result == MatchResult.INDETERMINATE){

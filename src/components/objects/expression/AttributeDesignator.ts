@@ -6,6 +6,7 @@ import { StatusCode } from "../StatusCode";
 import { Status } from "../Status";
 import { Expression } from "./Expression";
 import { EvaluationResult } from "../result/EvaluationResult";
+import { MatchResult } from "../../../enums/MatchResult";
 
 @JsonObject()
 export class AttributeDesignator implements Expression {
@@ -17,14 +18,14 @@ export class AttributeDesignator implements Expression {
     private _dataType: string;
     @JsonProperty({name: 'MustBePresent', required: true})
     private _mustBePresent: boolean = false; //recordar seccion 7.3.5
-    @JsonProperty({name: 'Issuer', required: true})
-    private _issuer: string;
+    @JsonProperty({name: 'Issuer', required: false})
+    private _issuer?: string;
 
     constructor(attributeId: string,
         category: string,
         dataType: string,
         mustBePresent: boolean,
-        issuer: string) {
+        issuer?: string) {
 
             this._attributeId = attributeId;
             this._category = category;
@@ -74,10 +75,14 @@ export class AttributeDesignator implements Expression {
 
     public evaluate(request: RequestCtx): EvaluationResult | null {
         let result: EvaluationResult;
-
+        console.log("ATTRIBUTE DESIGNATOR EVALUATE");
+        let evalIssuer = this._issuer ? this._issuer: "";
         // look in  attribute values
-        result = request.getAttributeWithType(this._dataType, this._attributeId, this._issuer, this._category);
+        result = request.getAttributeWithType(this._dataType, this._attributeId, evalIssuer, this._category);
+        console.log("getAttributeWithType: ");
 
+        console.log(result);
+        console.log("###")
         // if the lookup was indeterminate, then we return immediately
         if (result.isIndeterminate){
             return result;
@@ -110,6 +115,7 @@ export class AttributeDesignator implements Expression {
                 return result;
             } // si this.mustBePresent == false, retorno la bag vacia
         }
+        console.log("%%%%%%%%%%%ATTRIBUTE DESIGNATOR EVALUATE");
 
         return result;
     }
