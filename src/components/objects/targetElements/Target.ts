@@ -26,7 +26,6 @@ export class Target {
         //let location of this._policiesLocation
         for (let anyOfElem of this._anyOf) {
             let result: MatchResult = anyOfElem.match(request);
-            console.log(`Target match: ${result}`);
             if (result == MatchResult.NO_MATCH){
                 return result;
             } else if(result == MatchResult.INDETERMINATE){

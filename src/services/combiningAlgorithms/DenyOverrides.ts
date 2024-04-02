@@ -13,7 +13,6 @@ export function denyOverridesCombiningAlgorithm(request: RequestCtx, elements: R
 
     for(let i=0 ; i < elements.length ; i++) {
         let decision : string = decisionFinder(request, elements[i]);
-        console.log(`decision: ${decision}`);
         
         if (decision == DecisionResult.DENY) {
             return DecisionResult.DENY;

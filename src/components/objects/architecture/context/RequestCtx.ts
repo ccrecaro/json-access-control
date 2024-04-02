@@ -69,7 +69,6 @@ export class RequestCtx implements Ctx {
             for(let categoryElement of this._category){
                 let attributesFound: Attribute[] = categoryElement.findAttribute(type, id, issuer, category);
                 for (let attribute of attributesFound) {
-                    console.log("inyecto valores")
                     values.push(attribute.value);
                 }
             }

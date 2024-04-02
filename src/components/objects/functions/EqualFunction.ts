@@ -13,8 +13,6 @@ export class EqualFunction extends BaseFunction {
     public evaluateFunction(inputs: Expression[], request: RequestCtx): EvaluationResult|null {
         var argValues: valueType[] = new Array(inputs.length);
         var result: EvaluationResult | null = this.evalArgs(inputs, request, argValues);
-        console.log("Equal function evaluate: ");
-        console.log(argValues);
         var evalResult: boolean = false;
         
         if (result != null)

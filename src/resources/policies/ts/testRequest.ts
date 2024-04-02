@@ -1,6 +1,6 @@
 export const dataRequest: any =
 {
-    ReturnPolicyIdList: false,
+    ReturnPolicyIdList: true,
     CombinedDecision: false,
     Category: [
         {

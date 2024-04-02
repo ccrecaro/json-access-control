@@ -101,11 +101,9 @@ export class Rule {
 
     public evaluate(request: RequestCtx): Result {
         var match: MatchResult;
-        console.log("RULE EVAL");
 
         if (this._target) {
             match = this._target.match(request);
-            console.log(`match: ${match}`);
 
             if (match == MatchResult.NO_MATCH){
                 return new Result(DecisionResult.NOT_APPLICABLE);

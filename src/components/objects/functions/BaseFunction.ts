@@ -23,14 +23,9 @@ export abstract class BaseFunction {
         var i = 0;
         let result: EvaluationResult|null = null;
         var ar = []
-        console.log("-> evalArgs");
-        console.log(args);
         for(let input of inputs) {            
             if(input instanceof AttributeDesignator){
-                console.log("ENTRO!!");
                 result =  input.evaluate(request);
-                console.log(result)
-                console.log("Salgo!!");
 
                 if(result != null){
                     if (result.isIndeterminate){

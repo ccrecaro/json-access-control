@@ -75,14 +75,10 @@ export class AttributeDesignator implements Expression {
 
     public evaluate(request: RequestCtx): EvaluationResult | null {
         let result: EvaluationResult;
-        console.log("ATTRIBUTE DESIGNATOR EVALUATE");
         let evalIssuer = this._issuer ? this._issuer: "";
         // look in  attribute values
         result = request.getAttributeWithType(this._dataType, this._attributeId, evalIssuer, this._category);
-        console.log("getAttributeWithType: ");
 
-        console.log(result);
-        console.log("###")
         // if the lookup was indeterminate, then we return immediately
         if (result.isIndeterminate){
             return result;
@@ -94,9 +90,6 @@ export class AttributeDesignator implements Expression {
         if (bag.length == 0) {
             if (this.mustBePresent) {
                 //If MustBePresent is “True”, then a missing attribute SHALL result in “Indeterminate”
-                console.log("AttributeDesignator failed to resolve a "
-                        + "value for a required attribute: " + this.attributeId);
-
                 let code: string = STATUS_MISSING_ATTRIBUTE;
 
                 let missingAttributes: MissingAttributeDetail[] = [];
@@ -115,7 +108,6 @@ export class AttributeDesignator implements Expression {
                 return result;
             } // si this.mustBePresent == false, retorno la bag vacia
         }
-        console.log("%%%%%%%%%%%ATTRIBUTE DESIGNATOR EVALUATE");
 
         return result;
     }

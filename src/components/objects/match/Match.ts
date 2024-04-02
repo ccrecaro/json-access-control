@@ -9,7 +9,7 @@ import { Expression } from "../expression/Expression";
 import { MatchResult } from "../../../enums/MatchResult";
 
 @JsonObject()
-export abstract class Match {
+export class Match {
     @JsonProperty({name: 'MatchId', required: true})
     private _matchId: string; //esto entrega la funcion a aplicar
     @JsonProperty({name: 'AttributeDesignator', type: AttributeDesignator, required: true})
@@ -76,9 +76,6 @@ export abstract class Match {
     public match(request: RequestCtx): MatchResult {
         var atLeastOneError: boolean = false;
         var result: EvaluationResult|null = this._evaluator.evaluate(request);
-        console.log(`Match evaluate: `);
-        console.log(result);
-        console.log("-------");
 
         if(result){
             if (result.isIndeterminate) {
@@ -94,10 +91,8 @@ export abstract class Match {
     
                 for (let element of bag) {
                     let inputs: Expression[] = [this._evaluator, element];
-                    console.log(`@ inputs: `);
-                    console.log(inputs);
                     let match: MatchResult = this.evaluateMatch(inputs, request);
-                    console.log(`@ match: ${match}`);
+                    
                     // we only need one match for this whole thing to match
                     if (match == MatchResult.MATCH) {
                         return match;

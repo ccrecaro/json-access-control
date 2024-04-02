@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { STATUS_PROCESSING_ERROR } from '../../../constants/Status';
-import { JsonSerializer, throwError } from 'typescript-json-serializer';
+import { JsonSerializer } from 'typescript-json-serializer';
 import { Policy } from '../../Policy';
 import { RequestCtx } from '../architecture/context/RequestCtx';
 import { StatusCode } from '../StatusCode';
@@ -51,7 +51,6 @@ class PolicyFinder {
             const policy = (defaultSerializer.deserialize(jsonPolicy, Policy) as Policy); //cast para anular nulls
 
             this._policies.set(policy.policyId, policy);
-            console.log(`Policy with id ${policy.policyId} added to policies`);
         }
     }
 
@@ -82,7 +81,6 @@ class PolicyFinder {
         // action based on how many policies we found
         switch (selectedPolicies.length) {
             case 0:
-                console.log("No matching XACML policy found");
                 return new PolicyFinderResult();
             case 1:
                 return new PolicyFinderResult(selectedPolicies[0]);

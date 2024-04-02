@@ -26,7 +26,6 @@ export class AllOf {
 
         for (let match of this._matches) {
             let result: MatchResult = match.match(request);
-            console.log(`AllOf match: ${result}`);
 
             // at least one no match
             if (result == MatchResult.NO_MATCH){

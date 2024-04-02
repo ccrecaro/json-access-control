@@ -10,5 +10,10 @@ const defaultSerializer = new JsonSerializer();
 const policyTest:Policy = defaultSerializer.deserialize(dataPolicy, Policy) as Policy;
 const requestTest:RequestCtx = defaultSerializer.deserialize(dataRequest, RequestCtx) as RequestCtx;
 
+console.log("===== Objeto ======");
 var res = policyTest.evaluate(requestTest);
 console.log(res);
+
+console.log("====== JSON =====");
+const data = defaultSerializer.serialize(res);
+console.log(JSON.stringify(data));

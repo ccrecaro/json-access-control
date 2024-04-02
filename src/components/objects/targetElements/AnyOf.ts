@@ -25,7 +25,6 @@ export class AnyOf {
 
         for (let group of this._allOf) {
             let result: MatchResult = group.match(request);
-            console.log(`AnyOf match: ${result}`);
 
             // One match
             if (result == MatchResult.MATCH){

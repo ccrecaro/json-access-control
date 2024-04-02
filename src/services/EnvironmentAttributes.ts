@@ -6,13 +6,10 @@ export class EnvironmentAttributes {
 
         switch(identifier) {
             case CURRENT_TIME: 
-                console.log(date.toTimeString());
                 return date.getTime();
             case CURRENT_DATE:
-                console.log(date.toDateString());
                 return date.getDate();
             case CURRENT_DATETIME:
-                console.log(date.toString());
                 return date;
         }
     }

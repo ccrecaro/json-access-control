@@ -231,7 +231,6 @@ export class Policy {
 
     public evaluate(request: RequestCtx): Result {
         var decisionResult: DecisionResult =  this.getCombiningAlgorithm(request);
-        console.log(`decisionResult: ${decisionResult}`);
         
         if(this._obligationExpressions && this._obligationExpressions.length<1 
             && this._adviceExpressions && this._adviceExpressions.length<1) {
@@ -253,7 +252,6 @@ export class Policy {
         if(this._rule){
             switch (this._ruleCombiningAlgId) {
                 case DENY_OVERRIDES:
-                    console.log(DENY_OVERRIDES);
                     return denyOverridesCombiningAlgorithm(request, this._rule);
                 case DENY_UNLESS_PERMIT:
                     return denyUnlessPermitCombiningAlgorithm(request, this._rule);
