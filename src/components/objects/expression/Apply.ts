@@ -16,7 +16,6 @@ export class Apply implements Expression {
     constructor(functionId: string,
         description?: string,
         expression?: Expression[]) {
-
             this._functionId = functionId;
             this._description = description;
             this._expression = expression;

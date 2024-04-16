@@ -1,3 +1,4 @@
+import { JsonObject, JsonProperty } from "typescript-json-serializer";
 import { RequestCtx } from "../architecture/context/RequestCtx";
 import { EvaluationResult } from "../result/EvaluationResult";
 

@@ -26,7 +26,6 @@ export class AttributeDesignator implements Expression {
         dataType: string,
         mustBePresent: boolean,
         issuer?: string) {
-
             this._attributeId = attributeId;
             this._category = category;
             this._dataType = dataType;

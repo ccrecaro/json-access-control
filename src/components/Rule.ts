@@ -8,6 +8,11 @@ import { EvaluationResult } from "./objects/result/EvaluationResult";
 import { Expression } from "./objects/expression/Expression";
 import { MatchResult } from "../enums/MatchResult";
 import { DecisionResult } from "../enums/DecisionResults";
+import { Apply } from "./objects/expression/Apply";
+import { Attribute } from "./objects/expression/Attribute";
+import { AttributeDesignator } from "./objects/expression/AttributeDesignator";
+import { FunctionEx } from "./objects/expression/FunctionEx";
+import { BaseExpression } from "./objects/expression/BaseExpression";
 
 @JsonObject()
 export class Rule {
@@ -19,8 +24,8 @@ export class Rule {
     private _description?: string;
     @JsonProperty({name: 'Target', type: Target, required: false})
     private _target?: Target;
-    @JsonProperty({name: 'Condition', type: Expression, required: false})
-    private _condition?: Expression;
+    @JsonProperty({name: 'Condition', type: BaseExpression, required: false})
+    private _condition?: BaseExpression;
     @JsonProperty({name: 'ObligationExpressions', type: ObligationOrAdviceExpression, required: false})
     private _obligationExpressions?: ObligationOrAdviceExpression[];
     @JsonProperty({name: 'AdviceExpressions', type: ObligationOrAdviceExpression, required: false})
@@ -123,7 +128,7 @@ export class Rule {
         }
 
         var result: EvaluationResult|null = this._condition.evaluate(request);
-
+        
         if(result) {
             if(result._isIndeterminate) {
                 if(this._effect == "Permit"){

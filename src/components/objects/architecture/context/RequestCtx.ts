@@ -67,9 +67,11 @@ export class RequestCtx implements Ctx {
         let values: valueType[] = [];
         if(this._category){
             for(let categoryElement of this._category){
-                let attributesFound: Attribute[] = categoryElement.findAttribute(type, id, issuer, category);
-                for (let attribute of attributesFound) {
-                    values.push(attribute.value);
+                if(categoryElement.categoryId.valueOf() === category.valueOf()){
+                    let attributesFound: Attribute[] = categoryElement.findAttribute(type, id, issuer, category);
+                    for (let attribute of attributesFound) {
+                        values.push(attribute.value);
+                    }
                 }
             }
         }

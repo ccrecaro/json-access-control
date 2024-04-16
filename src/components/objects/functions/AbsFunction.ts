@@ -1,10 +1,11 @@
-import { STRING_EQUAL_IGNORE_CASE_EQUAL } from "../../../constants/Functions";
+import { DOUBLE, INTEGER } from "../../../constants/DataTypes";
+import { INTEGER_MULTIPLY } from "../../../constants/Functions";
 import { RequestCtx } from "../architecture/context/RequestCtx";
 import { Expression } from "../expression/Expression";
 import { EvaluationResult } from "../result/EvaluationResult";
 import { BaseFunction } from "./BaseFunction";
 
-export class EqualFunction extends BaseFunction {
+export class AbsFunction extends BaseFunction {
 
     constructor(functionId: string) {
         super(functionId);
@@ -13,21 +14,16 @@ export class EqualFunction extends BaseFunction {
     public evaluateFunction(inputs: Expression[], request: RequestCtx): EvaluationResult|null {
         var argValues: valueType[] = new Array(inputs.length);
         var result: EvaluationResult | null = this.evalArgs(inputs, request, argValues);
-        var evalResult: boolean = false;
         
         if (result != null)
             return result;
 
+        var arg: number = <number>argValues[0];
+        var absValue: number = Math.abs(arg);
 
-        if(argValues[0] && argValues[1]){
-            if(this.functionId == STRING_EQUAL_IGNORE_CASE_EQUAL){
-                evalResult = argValues[0].toString().toLowerCase() === argValues[1].toString().toLowerCase();
-            }  else {
-                evalResult = argValues[0].toString() == argValues[1].toString();
-            }
-        }
-        return new EvaluationResult(false, evalResult, "boolean", null, null);
-
+        const dataType = this.functionId == INTEGER_MULTIPLY ? INTEGER : DOUBLE;
+        result = new EvaluationResult(false, absValue, dataType, null, null);
+        return result;
     }
 
 

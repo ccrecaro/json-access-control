@@ -2,7 +2,6 @@ import { PERMIT_OVERRIDES } from "../constants/PolicyAlgorithms";
 import { DENY_OVERRIDES, DENY_UNLESS_PERMIT, FIRST_APPLICABLE, ORDERED_PERMIT_OVERRIDES, PERMIT_UNLESS_DENY } from "../constants/RuleAlgorithms";
 import { DecisionResult } from "../enums/DecisionResults";
 import { MatchResult } from "../enums/MatchResult";
-import { decisionFinder } from "../services/combiningAlgorithms/DecisionFinder";
 import { denyOverridesCombiningAlgorithm } from "../services/combiningAlgorithms/DenyOverrides";
 import { denyUnlessPermitCombiningAlgorithm } from "../services/combiningAlgorithms/DenyUnlessPermit";
 import { firstApplicableEffectRuleCombiningAlgorithm } from "../services/combiningAlgorithms/FirstApplicable";
@@ -217,7 +216,7 @@ export class Policy {
         var policyIdentifier: PolicyIdentifier = new PolicyIdentifier([idReference]);
 
         if(this._obligationExpressions && this._obligationExpressions.length<1 
-            && this._adviceExpressions && this._adviceExpressions.length<1) {
+            || this._adviceExpressions && this._adviceExpressions.length<1) {
             return new ResponseCtx([result]);
         }
         if(this.isIndeterminate(decisionResult) || decisionResult == DecisionResult.NOT_APPLICABLE) {
@@ -273,7 +272,11 @@ export class Policy {
     }
 
     public match(request: RequestCtx): MatchResult {
-        return this.target.match(request);
+        if(this._target){
+            return this._target.match(request);
+        } else {
+            return MatchResult.MATCH;
+        }
     }
 
     private isIndeterminate(result: DecisionResult): boolean {
@@ -294,7 +297,7 @@ export class Policy {
 
         if(this._obligationExpressions != null && this._obligationExpressions.length > 0) {
             for(let obligationExpression of this._obligationExpressions) {
-                if(obligationExpression.fulfillOnOrAppliesTo == effect) {
+                if(obligationExpression.fulfillOnOrAppliesTo.toLowerCase() == effect.toLowerCase()) {
                     results.add(obligationExpression.evaluate(request));
                 }
             }

@@ -1,10 +1,11 @@
-import { STRING_EQUAL_IGNORE_CASE_EQUAL } from "../../../constants/Functions";
+import { STRING } from "../../../constants/DataTypes";
+import { STRING_NORMALIZE_SPACE, STRING_NORMALIZE_TO_LOWER_CASE } from "../../../constants/Functions";
 import { RequestCtx } from "../architecture/context/RequestCtx";
 import { Expression } from "../expression/Expression";
 import { EvaluationResult } from "../result/EvaluationResult";
 import { BaseFunction } from "./BaseFunction";
 
-export class EqualFunction extends BaseFunction {
+export class StringNormalizeFunction extends BaseFunction {
 
     constructor(functionId: string) {
         super(functionId);
@@ -13,22 +14,20 @@ export class EqualFunction extends BaseFunction {
     public evaluateFunction(inputs: Expression[], request: RequestCtx): EvaluationResult|null {
         var argValues: valueType[] = new Array(inputs.length);
         var result: EvaluationResult | null = this.evalArgs(inputs, request, argValues);
-        var evalResult: boolean = false;
         
         if (result != null)
             return result;
 
+        var str: string = <string>argValues[0];
 
-        if(argValues[0] && argValues[1]){
-            if(this.functionId == STRING_EQUAL_IGNORE_CASE_EQUAL){
-                evalResult = argValues[0].toString().toLowerCase() === argValues[1].toString().toLowerCase();
-            }  else {
-                evalResult = argValues[0].toString() == argValues[1].toString();
-            }
+        switch(this.functionId) {
+            case STRING_NORMALIZE_SPACE:
+                return new EvaluationResult(false, str.trim(), STRING, null, null);
+            case STRING_NORMALIZE_TO_LOWER_CASE:
+                return new EvaluationResult(false, str.toLowerCase(), STRING, null, null);
+            default: 
+                return result;
         }
-        return new EvaluationResult(false, evalResult, "boolean", null, null);
-
     }
-
 
 }

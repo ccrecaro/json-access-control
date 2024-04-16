@@ -7,8 +7,11 @@ import { StatusCode } from '../StatusCode';
 import { Status } from '../Status';
 import { PolicyFinderResult } from './PolicyFinderResult';
 import { MatchResult } from '../../../enums/MatchResult';
+import { dataPolicy } from '../../../resources/policies/ts/testPolicy';
+import { readJSONFile } from '../../../utils/Functions/readJSONFile';
 
-class PolicyFinder {
+
+export class PolicyFinder {
     private _policies: Map<string, Policy>;
     private _policiesLocation: string[]; //lista de path de cada politica. Debe ser el path completo hacia cada archivo
     
@@ -26,30 +29,31 @@ class PolicyFinder {
         this.policies.clear();
 
         for(let location of this._policiesLocation) {
+            
             if(!fs.existsSync(location)) {
                 continue;
             }
 
-            let rawData = fs.readFileSync(location, 'utf8');
-            let jsonData = JSON.parse(rawData); //Fix this de acuerdo al test que hice
-
+            let jsonData = readJSONFile(location);
             this.loadPolicy(jsonData);
         }
+
     }
 
-    public loadPolicy(jsonPolicy: JSON) {
+    public loadPoliciesTest() {
+        const defaultSerializer = new JsonSerializer();
+
+        const policyTest:Policy = defaultSerializer.deserialize(dataPolicy, Policy) as Policy;
+        this._policies.set(policyTest.policyId, policyTest);
+    }
+
+    public loadPolicy(jsonPolicy: any) {
         //var policySet: PolicySet;
         var policy: Policy;
         const defaultSerializer = new JsonSerializer();
 
-/*         if(jsonPolicy.hasOwnProperty("PolicySet")) {
-            policySet = PolicySet.createPolicySetFromJSON(jsonPolicy);
-            this._policies.set(policySet.policySetId, policySet);
-            console.log(`PolicySet with id ${policySet.policySetId} added to policies`);
-
-        } else  */if(jsonPolicy.hasOwnProperty("Policy")) {
-            const policy = (defaultSerializer.deserialize(jsonPolicy, Policy) as Policy); //cast para anular nulls
-
+        if(jsonPolicy.hasOwnProperty("PolicyId")) {
+            policy = defaultSerializer.deserialize(jsonPolicy, Policy) as Policy; //cast para anular nulls            
             this._policies.set(policy.policyId, policy);
         }
     }
@@ -58,7 +62,12 @@ class PolicyFinder {
         var selectedPolicies: Policy[] = [];
         
         for(let policy of this._policies.values()) {
-            let matchResult: MatchResult = policy.match(request);
+            let matchResult: MatchResult;
+            if(policy.getTarget()){
+                matchResult = policy.match(request);
+            } else { //El target viene vacio, por lo que la politica se aplica a todas
+                return new PolicyFinderResult(policy);
+            }
 
             if (matchResult == MatchResult.INDETERMINATE)
                 return new PolicyFinderResult(policy, matchResult);
@@ -89,4 +98,5 @@ class PolicyFinder {
                 //return new PolicyFinderResult(new PolicySet(null, combiningAlg, null, selectedPolicies)); //arreglar esto
         }
     }
+
 }

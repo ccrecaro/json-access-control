@@ -93,6 +93,24 @@
                         ]
                     }
                 ]
+            },
+            "Condition": {
+                "Apply": {
+                    "FunctionId": "urn:oasis:names:tc:xacml:1.0:function:string-equal",
+                    "Expression": [
+                        {
+                            "Apply": {
+                                "FunctionId": "urn:oasis:names:tc:xacml:1.0:function:string-one-and-only",
+                                "AttributeDesignator": {
+                                    "MustBePresent": false,
+                                    "Category": "urn:oasis:names:tc:xacml:1.0:subject-category:access-subject",
+                                    "AttributeId": "urn:oasis:names:tc:xacml:3.0:example: attribute:physician-id",
+                                    "DataType": "http://www.w3.org/2001/XMLSchema#string"
+                                }
+                            }
+                        }
+                    ]
+                }
             }
         }
     ],
@@ -105,7 +123,6 @@
                     "Id": "urn:oasis:names:tc:xacml:3.0:example:attribute:text",
                     "Expression": {
                         "Attribute": {
-                            "AttributeId": "urn:oasis:names:tc:xacml:3.0:example:attribute:text",
                             "DataType": "http://www.w3.org/2001/XMLSchema#string",
                             "Value": "Your medical record has been accessed by:"
                         }

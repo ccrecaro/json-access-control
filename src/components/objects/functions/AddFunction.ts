@@ -1,10 +1,11 @@
-import { STRING_EQUAL_IGNORE_CASE_EQUAL } from "../../../constants/Functions";
+import { DOUBLE, INTEGER } from "../../../constants/DataTypes";
+import { INTEGER_ADD } from "../../../constants/Functions";
 import { RequestCtx } from "../architecture/context/RequestCtx";
 import { Expression } from "../expression/Expression";
 import { EvaluationResult } from "../result/EvaluationResult";
 import { BaseFunction } from "./BaseFunction";
 
-export class EqualFunction extends BaseFunction {
+export class AddFunction extends BaseFunction {
 
     constructor(functionId: string) {
         super(functionId);
@@ -13,21 +14,19 @@ export class EqualFunction extends BaseFunction {
     public evaluateFunction(inputs: Expression[], request: RequestCtx): EvaluationResult|null {
         var argValues: valueType[] = new Array(inputs.length);
         var result: EvaluationResult | null = this.evalArgs(inputs, request, argValues);
-        var evalResult: boolean = false;
         
         if (result != null)
             return result;
 
-
-        if(argValues[0] && argValues[1]){
-            if(this.functionId == STRING_EQUAL_IGNORE_CASE_EQUAL){
-                evalResult = argValues[0].toString().toLowerCase() === argValues[1].toString().toLowerCase();
-            }  else {
-                evalResult = argValues[0].toString() == argValues[1].toString();
-            }
+        var sum: number = 0;
+        for (let index = 0; index < argValues.length; index++) {
+            let arg: number = <number>argValues[index];
+            sum += arg;
         }
-        return new EvaluationResult(false, evalResult, "boolean", null, null);
 
+        const dataType = this.functionId == INTEGER_ADD ? INTEGER : DOUBLE;
+        result = new EvaluationResult(false, sum, dataType, null, null);
+        return result;
     }
 
 

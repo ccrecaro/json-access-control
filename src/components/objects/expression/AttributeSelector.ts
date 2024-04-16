@@ -21,7 +21,6 @@ export class AttributeSelector implements Expression{
         dataType: string,
         mustBePresent: boolean,
         contextSelectorId?: string) {
-
             this._category = category;
             this._path = path;
             this._dataType = dataType;

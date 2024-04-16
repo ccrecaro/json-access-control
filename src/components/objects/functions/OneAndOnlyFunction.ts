@@ -4,7 +4,7 @@ import { Expression } from "../expression/Expression";
 import { EvaluationResult } from "../result/EvaluationResult";
 import { BaseFunction } from "./BaseFunction";
 
-export class EqualFunction extends BaseFunction {
+export class OneAndOnly extends BaseFunction {
 
     constructor(functionId: string) {
         super(functionId);

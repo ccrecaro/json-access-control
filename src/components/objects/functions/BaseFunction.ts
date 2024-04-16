@@ -1,3 +1,5 @@
+import { STATUS_PROCESSING_ERROR } from "../../../constants/Status";
+import { Status } from "../Status";
 import { RequestCtx } from "../architecture/context/RequestCtx";
 import { AttributeDesignator } from "../expression/AttributeDesignator";
 import { Expression } from "../expression/Expression";
@@ -46,4 +48,11 @@ export abstract class BaseFunction {
     }
 
     abstract evaluateFunction(inputs: Expression[]|undefined, request: RequestCtx): EvaluationResult|null;
+
+    protected makeProcessingError(message: String): EvaluationResult {
+        var errStatus: Status = new Status(STATUS_PROCESSING_ERROR);
+        var processingError: EvaluationResult = new EvaluationResult(true, null, "", errStatus, null);
+
+        return processingError;
+    }
 }

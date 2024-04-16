@@ -59,12 +59,15 @@ export class Category {
 
     public findAttribute(type: string, id: string, issuer: string, category: string): Attribute[] {
         var attributeResult: Attribute[] = [];
-        if(this._categoryId == category && this._attribute) {
+        if(this._attribute){
             for(let attribute of this._attribute) {
-                if (attribute.isSearchedAttribute(type, id, issuer))
-                    attributeResult.push(attribute);
+                if(attribute.attributeId.valueOf() === id.valueOf()) {
+                    if (attribute.isSearchedAttribute(type, id, issuer))
+                        attributeResult.push(attribute);
+                }
             }
         }
+
         return attributeResult;
     }
 

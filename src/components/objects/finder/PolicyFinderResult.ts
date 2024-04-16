@@ -40,4 +40,12 @@ export class PolicyFinderResult {
     public set status(status: Status) {
         this._status = status;
     }
+
+    public notApplicable(): boolean {
+        return ((this._policy == null) && (this._status == undefined));
+    }
+
+    public indeterminate(): boolean {
+        return this._status!=null;
+    }
 }
