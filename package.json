@@ -2,7 +2,7 @@
   "name": "json-access-control",
   "version": "1.0.0",
   "description": "JSON based tool for access control",
-  "main": "dist/index.ts",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "/dist"

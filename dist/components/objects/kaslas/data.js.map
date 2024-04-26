@@ -1,1 +1,0 @@
-{"version":3,"file":"data.js","sourceRoot":"","sources":["../../../../src/components/objects/kaslas/data.ts"],"names":[],"mappings":";;;AAAa,QAAA,UAAU,GAAQ;IAC3B,QAAQ,EAAE,KAAK;IACf,kBAAkB,EAAE,MAAM;IAC1B,MAAM,EAAE;QACJ,SAAS,EAAE;YACP,EAAE,EAAE,SAAS;YACb,GAAG,EAAE,CAAC;SACT;KACJ;IACD,gBAAgB,EAAE;QACd,MAAM,EAAE,SAAS;KACpB;CACJ,CAAC"}

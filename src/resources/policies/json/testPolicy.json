@@ -1,7 +1,7 @@
 {
     "PolicyId": "urn:oasis:names:tc:xacml:3.0:example:SimplePolicy1",
     "Version": "1.0",
-    "RuleCombiningAlgId": "identifier:rule-combining-algorithm:deny-overrides",
+    "RuleCombiningAlgId": "urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-overrides",
     "Description": "Medi Corp access control policy",
     "Rule": [
         {

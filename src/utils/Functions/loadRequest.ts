@@ -10,5 +10,4 @@ export function loadRequest(location: string): RequestCtx {
     request = defaultSerializer.deserialize(jsonData, RequestCtx) as RequestCtx; //cast para anular nulls            
 
     return request;
-    
 }

@@ -7,30 +7,8 @@ import { PDP } from "./components/objects/architecture/PDP";
 import { PolicyFinder } from "./components/objects/finder/PolicyFinder";
 import { parseRequestToJSON } from "./utils/Functions/parseRequestToJSON";
 import { loadRequest } from "./utils/Functions/loadRequest";
-
-//const dataRequest = parseRequestToJSON();
-
-const defaultSerializer = new JsonSerializer();
-
-const policyTest:Policy = defaultSerializer.deserialize(dataPolicy, Policy) as Policy;
-const requestTest:RequestCtx = defaultSerializer.deserialize(dataRequest, RequestCtx) as RequestCtx;
-
-const reqJSON = parseRequestToJSON("bs@simpsons.com");
-const req:RequestCtx = loadRequest("./src/resources/policies/json/testRequest2.json");
-
-console.log("===== Objeto 3======");
-var policyFinder: PolicyFinder = new PolicyFinder(["./src/resources/policies/json/testPolicy4.json"]);
-var pdp:PDP = new PDP(policyFinder);
-pdp.policyFinder.loadPolicies();
-
-var res = pdp.evaluateContext(req);
-console.log(JSON.stringify(res));
+import { ResponseCtx } from "./components/objects/architecture/context/ResponseCtx";
+import { Result } from "./components/objects/Result";
 
 
-var res2 = policyTest.evaluate(requestTest);
-//console.log(res2);
-/*
-console.log("====== JSON =====");
-const data = defaultSerializer.serialize(res);
-console.log(JSON.stringify(data));
-*/
+export { Policy, RequestCtx, dataPolicy, JsonSerializer, dataRequest, PDP, PolicyFinder, parseRequestToJSON, loadRequest, ResponseCtx, Result };

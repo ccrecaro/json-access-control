@@ -1,1 +1,0 @@
-{"version":3,"file":"ResponseJSON.js","sourceRoot":"","sources":["../../src/components/ResponseJSON.ts"],"names":[],"mappings":";AAAA,MAAM,YAAY;IAGd,YAAY,MAAgB;QACxB,IAAI,CAAC,OAAO,GAAG,MAAM,CAAA;IACzB,CAAC;IAED,IAAW,MAAM;QACb,OAAO,IAAI,CAAC,OAAO,CAAC;IACxB,CAAC;IAED,IAAW,MAAM,CAAC,OAAiB;QAC/B,IAAI,CAAC,OAAO,GAAG,OAAO,CAAC;IAC3B,CAAC;CACJ"}

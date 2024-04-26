@@ -1,7 +1,7 @@
 {
     "PolicyId": "urn:oasis:names:tc:xacml:3.0:example:policyid:3",
     "Version": "1.0",
-    "RuleCombiningAlgId": "urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-overrides",
+    "RuleCombiningAlgId":  "urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:first-applicable",
     "Description": "Policy for any medical record in the http://www.med.example.com/schemas/record.xsd namespace",
     "PolicyDefaults": "http://www.w3.org/TR/1999/REC-xpath-19991116",
     "Target": {
