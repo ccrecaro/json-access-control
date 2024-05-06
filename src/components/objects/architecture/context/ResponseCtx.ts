@@ -1,5 +1,6 @@
 import { Result } from "../../Result";
 import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+import { Ctx } from "./Ctx";
 
 @JsonObject()
 export class ResponseCtx implements Ctx{

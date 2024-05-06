@@ -13,6 +13,7 @@ import { Attribute } from "./objects/expression/Attribute";
 import { AttributeDesignator } from "./objects/expression/AttributeDesignator";
 import { FunctionEx } from "./objects/expression/FunctionEx";
 import { BaseExpression } from "./objects/expression/BaseExpression";
+import { effectType } from "../utils/types/effectType";
 
 @JsonObject()
 export class Rule {

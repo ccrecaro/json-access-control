@@ -2,6 +2,7 @@ import { JsonObject, JsonProperty } from 'typescript-json-serializer';
 import { RequestCtx } from '../architecture/context/RequestCtx';
 import { Expression } from './Expression';
 import { EvaluationResult } from '../result/EvaluationResult';
+import { valueType } from '../../../utils/types/valueType';
 
 @JsonObject()
 export class Attribute implements Expression {

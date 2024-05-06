@@ -7,6 +7,7 @@ import { Status } from "../Status";
 import { Expression } from "./Expression";
 import { EvaluationResult } from "../result/EvaluationResult";
 import { MatchResult } from "../../../enums/MatchResult";
+import { valueType } from "../../../utils/types/valueType";
 
 @JsonObject()
 export class AttributeDesignator implements Expression {

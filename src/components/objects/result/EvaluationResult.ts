@@ -1,4 +1,5 @@
 import { MatchResult } from "../../../enums/MatchResult";
+import { valueType } from "../../../utils/types/valueType";
 import { Status } from "../Status";
 
 export class EvaluationResult {

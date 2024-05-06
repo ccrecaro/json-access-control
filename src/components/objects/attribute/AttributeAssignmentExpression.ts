@@ -9,6 +9,7 @@ import { AttributeAssignment } from "./AttributeAssignment";
 import { JsonObject, JsonProperty } from 'typescript-json-serializer';
 import { setExpression } from "../../../utils/Functions/setExpression";
 import { BaseExpression } from "../expression/BaseExpression";
+import { valueType } from "../../../utils/types/valueType";
 
 @JsonObject()
 export class AttributeAssignmentExpression {

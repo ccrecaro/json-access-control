@@ -7,6 +7,7 @@ import { EvaluationResult } from "../result/EvaluationResult";
 import { FunctionEx } from "../expression/FunctionEx";
 import { Expression } from "../expression/Expression";
 import { MatchResult } from "../../../enums/MatchResult";
+import { valueType } from "../../../utils/types/valueType";
 
 @JsonObject()
 export class Match {

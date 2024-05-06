@@ -1,5 +1,6 @@
 import { STRING } from "../../../constants/DataTypes";
 import { STRING_NORMALIZE_SPACE, STRING_NORMALIZE_TO_LOWER_CASE } from "../../../constants/Functions";
+import { valueType } from "../../../utils/types/valueType";
 import { RequestCtx } from "../architecture/context/RequestCtx";
 import { Expression } from "../expression/Expression";
 import { EvaluationResult } from "../result/EvaluationResult";

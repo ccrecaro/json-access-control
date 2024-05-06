@@ -15,13 +15,12 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    //"composite": true,
     /* Type Checking */
     "strict": true,                                      /* Enable all strict type-checking options. */
-    "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
-    "composite": true
+    //"skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
+    //"composite": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "tsup.config.ts"],
   "exclude": ["node_modules"],
 
 }

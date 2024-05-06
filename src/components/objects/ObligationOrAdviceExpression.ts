@@ -1,3 +1,4 @@
+import { effectType } from "../../utils/types/effectType";
 import { ObligationOrAdvice } from "./ObligationOrAdvice";
 import { RequestCtx } from "./architecture/context/RequestCtx";
 import { AttributeAssignment } from "./attribute/AttributeAssignment";

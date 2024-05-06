@@ -1,4 +1,5 @@
 import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+import { valueType } from '../../utils/types/valueType';
 
 @JsonObject()
 export class MissingAttributeDetail {

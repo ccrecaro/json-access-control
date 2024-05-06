@@ -1,5 +1,6 @@
 import { DOUBLE, INTEGER } from "../../../constants/DataTypes";
 import { DOUBLE_TO_INTEGER, INTEGER_TO_DOUBLE } from "../../../constants/Functions";
+import { valueType } from "../../../utils/types/valueType";
 import { RequestCtx } from "../architecture/context/RequestCtx";
 import { Expression } from "../expression/Expression";
 import { EvaluationResult } from "../result/EvaluationResult";
