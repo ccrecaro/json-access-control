@@ -1,1 +1,1 @@
-type effectType = "Permit" | "Deny";
+export type effectType = "Permit" | "Deny";

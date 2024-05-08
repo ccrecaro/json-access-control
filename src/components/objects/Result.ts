@@ -1,9 +1,29 @@
-class Result {
+import { Category } from "./Category";
+import { ObligationOrAdvice } from "./ObligationOrAdvice";
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+import { Status } from "./Status";
+import { PolicyIdentifier } from "./PolicyIdentifier";
+import { getKeyByValue } from "../../utils/Functions/getKeyByValue";
+import { DecisionResult } from "../../enums/DecisionResults";
+
+@JsonObject()
+export class Result {
+    @JsonProperty({name: 'Decision', required: true})
     private _decision: string;
+    
+    @JsonProperty({name: 'Status', type: Status, required: false})
     private _status?: Status;
+    
+    @JsonProperty({name: 'Obligations', type: ObligationOrAdvice, required: false})
     private _obligations?: ObligationOrAdvice[];
+    
+    @JsonProperty({name: 'AssociatedAdvice', type: ObligationOrAdvice, required: false})
     private _associatedAdvice?: ObligationOrAdvice[];
+    
+    @JsonProperty({name: 'Category', type: Category, required: false})
     private _category?: Category | Category[];
+    
+    @JsonProperty({name: 'PolicyIdentifierList', type: PolicyIdentifier, required: false})
     private _policyIdentifierList?: PolicyIdentifier[];
 
     constructor(decision: string,
@@ -67,6 +87,10 @@ class Result {
 
     public set policyIdentifierList(policyIdentifierList: PolicyIdentifier[]) {
         this._policyIdentifierList = policyIdentifierList;
+    }
+
+    public getDecisionResultFromString() {
+        return getKeyByValue(DecisionResult, this._decision);
     }
 
 }

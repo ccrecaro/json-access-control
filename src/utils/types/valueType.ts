@@ -1,1 +1,1 @@
-type valueType = string | boolean | number | object | string[] | boolean[] | number[] | object[];
+export type valueType = string | boolean | number | object | string[] | boolean[] | number[] | object[] | null;

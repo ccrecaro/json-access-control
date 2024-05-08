@@ -1,4 +1,6 @@
-class PolicyIdentifier {
+import { IdReference } from "./IdReference";
+
+export class PolicyIdentifier {
     private _policyIdReference?: IdReference[];
     private _policySetIdReference?: IdReference[];
 

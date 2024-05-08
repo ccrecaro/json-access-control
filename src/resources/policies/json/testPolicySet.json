@@ -1,0 +1,54 @@
+{
+    "PolicySet": {
+        "PolicySetId": "urn:oasis:names:tc:xacml:3.0:example:policysetid:1",
+        "Version": "1.0",
+        "PolicyCombiningAlgId": "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:deny-overrides",
+        "Description": "Example policy set.",
+        "Target": {
+            "AnyOf": [
+                {
+                    "AllOf": [
+                        {
+                            "Match": [
+                                {
+                                    "MatchId": "urn:oasis:names:tc:xacml:1.0:function:string-equal",
+                                    "Value": "urn:example:med:schema:records",
+                                    "DataType": "http://www.w3.org/2001/XMLSchema#string",
+                                    "AttributeDesignator": {
+                                        "MustBePresent": "false",
+                                        "Category": "urn:oasis:names:tc:xacml:3.0:attribute-category:resource",
+                                        "AttributeId": "urn:oasis:names:tc:xacml:2.0:resource:target-namespace",
+                                        "DataType": "http://www.w3.org/2001/XMLSchema#string"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "PolicyIdReference": "urn:oasis:names:tc:xacml:3.0:example:policyid:3",
+        "Policy": [
+            {
+                "PolicyId": "urn:oasis:names:tc:xacml:3.0:example:policyid:2",
+                "RuleCombiningAlgId": "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides",
+                "Version": "1.0",
+                "Target": {},
+                "Rule": [
+                    {
+                        "RuleId": "urn:oasis:names:tc:xacml:3.0:example:ruleid:1",
+                        "Effect": "Permit"
+                    },
+                    {
+                        "RuleId": "urn:oasis:names:tc:xacml:3.0:example:ruleid:2",
+                        "Effect": "Permit"
+                    },
+                    {
+                        "RuleId": "urn:oasis:names:tc:xacml:3.0:example:ruleid:4",
+                        "Effect": "Deny"
+                    }
+                ]
+            }
+        ]
+    }
+}

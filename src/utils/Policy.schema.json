@@ -1,10 +1,10 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://example.com/product.schema.json",
+    "$id": "https://example.com/policy.schema.json",
     "title": "Policy Schema",
-    "description": "A product in the catalog",
+    "description": "JSON schema for Policy object",
     "properties": {
-      "Request": {
+      "Policy": {
           "type": "object",
           "properties": {
               "PolicySet": {
@@ -459,6 +459,19 @@
             },
             "required": [ "RuleIdRef" ]
         },
+        "VariableReferenceObject": {
+            "type": "object",
+            "properties": {
+                "VariableId": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Definition": {
+                    "$ref": "#/definition/VariableDefinitionObject"
+                }
+            },
+            "required": [ "VariableId" ]
+        },
         "VariableDefinitionObject": {
             "type": "object",
             "properties": {
@@ -543,16 +556,6 @@
                 }
             },
             "required": [ "FunctionId" ]
-        },
-        "VariableReferenceObject": {
-            "type": "object",
-            "properties": {
-                "VariableId": {
-                    "type": "string",
-                    "format": "uri"
-                }
-            },
-            "required": [ "VariableId" ]
         },
         "AttributeDesignatorObject": {
             "type": "object",

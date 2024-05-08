@@ -1,13 +1,24 @@
-class Category {
+import { Attribute } from "./expression/Attribute";
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+
+@JsonObject()
+export class Category {
+    @JsonProperty({name: 'CategoryId', required: true})
     private _categoryId: string;
+    
+    @JsonProperty({name: 'Id', required: false})
     private _id?: string;
+    
+    @JsonProperty({name: 'Content', required: false})
     private _content?: string;
-    private _attribute?: Attribute;
+    
+    @JsonProperty({name: 'Attribute',type: Attribute, required: false})
+    private _attribute?: Attribute[];
 
     constructor(categoryId: string,
             id?: string,
             content?: string,
-            attribute?: Attribute) {
+            attribute?: Attribute[]) {
         this._categoryId = categoryId;
         this._id = id;
         this._content = content;
@@ -42,8 +53,22 @@ class Category {
         return this._attribute; 
     }
 
-    public set xPathVersion(attribute: Attribute) {
+    public set attribute(attribute: Attribute[]) {
         this._attribute = attribute;
+    }
+
+    public findAttribute(type: string, id: string, issuer: string, category: string): Attribute[] {
+        var attributeResult: Attribute[] = [];
+        if(this._attribute){
+            for(let attribute of this._attribute) {
+                if(attribute.attributeId.valueOf() === id.valueOf()) {
+                    if (attribute.isSearchedAttribute(type, id, issuer))
+                        attributeResult.push(attribute);
+                }
+            }
+        }
+
+        return attributeResult;
     }
 
 }

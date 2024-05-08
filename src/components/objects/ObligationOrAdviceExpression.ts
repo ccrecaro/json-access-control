@@ -1,6 +1,17 @@
-class ObligationOrAdviceExpression {
+import { effectType } from "../../utils/types/effectType";
+import { ObligationOrAdvice } from "./ObligationOrAdvice";
+import { RequestCtx } from "./architecture/context/RequestCtx";
+import { AttributeAssignment } from "./attribute/AttributeAssignment";
+import { AttributeAssignmentExpression } from "./attribute/AttributeAssignmentExpression";
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+
+@JsonObject()
+export class ObligationOrAdviceExpression {
+    @JsonProperty({name: 'Id', required: true})
     private _id: string;
+    @JsonProperty({name: 'FulfillOnOrAppliesTo', required: true})
     private _fulfillOnOrAppliesTo: effectType;
+    @JsonProperty({name: 'AttributeAssignmentExpression', type: AttributeAssignmentExpression, required: false})
     private _attributeAssignmentExpression?: AttributeAssignmentExpression[];
 
     constructor(id: string,
@@ -36,4 +47,16 @@ class ObligationOrAdviceExpression {
         this._attributeAssignmentExpression = expressions;
     }
 
+    public evaluate(request: RequestCtx): ObligationOrAdvice {
+        var assignments: AttributeAssignment[] = [];
+        if(this._attributeAssignmentExpression){
+            for(let expression of this._attributeAssignmentExpression) {
+                let assignmentSet = expression.evaluate(request);
+                if(assignmentSet != null && assignmentSet.size > 0) {
+                    assignmentSet.forEach((item: AttributeAssignment) => assignments.push(item))
+                }
+            }
+        }
+        return new ObligationOrAdvice(this._id, assignments);
+    }
 }

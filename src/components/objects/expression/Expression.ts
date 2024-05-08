@@ -1,3 +1,8 @@
-interface Expression {
-    execute(): void;
+import { JsonObject, JsonProperty } from "typescript-json-serializer";
+import { RequestCtx } from "../architecture/context/RequestCtx";
+import { EvaluationResult } from "../result/EvaluationResult";
+
+export abstract class Expression {
+    abstract evaluate(request: RequestCtx): EvaluationResult | null;
+
 }

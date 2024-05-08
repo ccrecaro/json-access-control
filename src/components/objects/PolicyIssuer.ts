@@ -1,5 +1,11 @@
-class PolicyIssuer {
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+import { Attribute } from './expression/Attribute';
+
+@JsonObject()
+export class PolicyIssuer {
+    @JsonProperty({name: 'Content', required: false})
     private _content?: string;
+    @JsonProperty({name: 'Attribute', type: Attribute, required: false})
     private _attribute?: Attribute[];
 
     constructor(content?: string, attribute?: Attribute[]) {

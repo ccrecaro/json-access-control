@@ -1,5 +1,12 @@
-class ObligationOrAdvice {
+import { AttributeAssignment } from "./attribute/AttributeAssignment";
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+
+@JsonObject()
+export class ObligationOrAdvice {
+    @JsonProperty({name: 'Id', required: true})
     private _id: string;
+    
+    @JsonProperty({name: 'AttributeAssignment', type: AttributeAssignment, required: false})
     private _attributeAssignment?: AttributeAssignment[];
 
     constructor(id: string, attributeAssignment: AttributeAssignment[]) {

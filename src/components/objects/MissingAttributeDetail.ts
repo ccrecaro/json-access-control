@@ -1,8 +1,21 @@
-class MissingAttributeDetail {
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+import { valueType } from '../../utils/types/valueType';
+
+@JsonObject()
+export class MissingAttributeDetail {
+    @JsonProperty({name: 'AttributeId', required: true})
     private _attributeId: string;
+    
+    @JsonProperty({name: 'Category', required: true})
     private _category: string
+    
+    @JsonProperty({name: 'Value', required: false})
     private _value?: valueType;
+    
+    @JsonProperty({name: 'Issuer', required: false})
     private _issuer?: string;
+    
+    @JsonProperty({name: 'DataType', required: false})
     private _dataType?: string;
 
     constructor(attributeId: string,

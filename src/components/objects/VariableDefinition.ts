@@ -1,5 +1,11 @@
-class VariableDefinition {
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+import { Expression } from './expression/Expression';
+
+@JsonObject()
+export class VariableDefinition {
+    @JsonProperty({name: 'Expression', type: Expression, required: true})
     private _expression: Expression;
+    @JsonProperty({name: 'VariableId', required: true})
     private _variableId: string;
 
     constructor(expression: Expression, variableId: string) {

@@ -1,17 +1,13 @@
 {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "https://example.com/product.schema.json",
+      "$id": "https://example.com/request.schema.json",
       "title": "Request Schema",
-      "description": "A product in the catalog",
+      "description": "JSON schema for Request object",
       "properties": {
         "Request": {
             "type": "object",
             "properties": {
                 "ReturnPolicyIdList": {
-                    "type": "boolean",
-                    "default": false
-                },
-                "CombinedDecision": {
                     "type": "boolean",
                     "default": false
                 },

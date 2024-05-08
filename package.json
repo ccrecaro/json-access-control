@@ -2,10 +2,16 @@
   "name": "json-access-control",
   "version": "1.0.0",
   "description": "JSON based tool for access control",
-  "main": "dist/index.ts",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsup",
+    "test": "jest",
+    "start": "node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,8 +24,15 @@
   },
   "homepage": "https://github.com/ccrecaro/json-access-control#readme",
   "devDependencies": {
-    "@types/node": "^20.11.17",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.21",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "tsup": "^8.0.2",
     "typescript": "^5.3.3",
     "typescript-eslint": "^7.0.1"
+  },
+  "dependencies": {
+    "typescript-json-serializer": "^6.0.1"
   }
 }

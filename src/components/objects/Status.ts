@@ -1,39 +1,49 @@
-class Status {
-    private _statusMessage?: string;
-    private _statusDetail?: string | MissingAttributeDetail[];
-    private _statusCode?: StatusCode;
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+import { StatusCode } from './StatusCode';
+import { MissingAttributeDetail } from './MissingAttributeDetail';
+
+@JsonObject()
+export class Status {
+    @JsonProperty({name: 'StatusMessage', required: false})
+    private _message?: string;
+    
+    @JsonProperty({name: 'StatusDetail', type: MissingAttributeDetail, required: false})
+    private _detail?: string | MissingAttributeDetail[];
+    
+    @JsonProperty({name: 'StatusCode', type: StatusCode, required: false})
+    private _code?: StatusCode;
 
     constructor(statusMessage?: string,
         statusDetail?: string | MissingAttributeDetail[],
         statusCode?: StatusCode) {
 
-            this._statusMessage = statusMessage;
-            this._statusDetail = statusDetail;
-            this._statusCode = statusCode;
+            this._message = statusMessage;
+            this._detail = statusDetail;
+            this._code = statusCode;
     }
 
-    public getStatusMessage() {
-        return this._statusMessage;
+    public getMessage() {
+        return this._message;
     }
 
-    public set statusMessage(message: string) {
-        this._statusMessage = message;
+    public set message(message: string) {
+        this._message = message;
     }
 
-    public getStatusDetail() {
-        return this._statusDetail;
+    public getDetail() {
+        return this._detail;
     }
 
-    public set statusDetail(detail: string | MissingAttributeDetail[]) {
-        this._statusDetail = detail;
+    public set detail(detail: string | MissingAttributeDetail[]) {
+        this._detail = detail;
     }
 
-    public getStatusCode() {
-        return this._statusCode;
+    public getCode() {
+        return this._code;
     }
 
-    public set statusCode(code: StatusCode) {
-        this._statusCode = code;
+    public set code(code: StatusCode) {
+        this._code = code;
     }
 
 }
